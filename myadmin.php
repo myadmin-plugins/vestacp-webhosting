@@ -15,10 +15,10 @@ return [
 	'version' => '1.0.0',
 	'type' => 'licenses',
 	'hooks' => [
-		'function.requirements' => ['Detain\MyAdminVestacp\Plugin', 'Requirements'],
+		/*'function.requirements' => ['Detain\MyAdminVestacp\Plugin', 'Requirements'],
 		'licenses.settings' => ['Detain\MyAdminVestacp\Plugin', 'Settings'],
 		'licenses.activate' => ['Detain\MyAdminVestacp\Plugin', 'Activate'],
 		'licenses.change_ip' => ['Detain\MyAdminVestacp\Plugin', 'ChangeIp'],
-		'ui.menu' => ['Detain\MyAdminVestacp\Plugin', 'Menu']
+		'ui.menu' => ['Detain\MyAdminVestacp\Plugin', 'Menu'] */
 	],
 ];
