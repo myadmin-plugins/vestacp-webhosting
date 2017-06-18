@@ -82,7 +82,7 @@ class Plugin {
 		$loader->add_requirement('vps_add_vestacp', '/vps/addons/vps_add_vestacp.php');
 	}
 
-	public static function Settings(GenericEvent $event) {
+	public static function getSettings(GenericEvent $event) {
 		// will be executed when the licenses.settings event is dispatched
 		$settings = $event->getSubject();
 		$settings->add_text_setting('licenses', 'Vestacp', 'vestacp_username', 'Vestacp Username:', 'Vestacp Username', $settings->get_setting('FANTASTICO_USERNAME'));
