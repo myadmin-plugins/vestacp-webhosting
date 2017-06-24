@@ -23,7 +23,6 @@ class Plugin {
 	}
 
 	public static function Activate(GenericEvent $event) {
-		// will be executed when the licenses.license event is dispatched
 		$license = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_FANTASTICO) {
 			myadmin_log('licenses', 'info', 'Vestacp Activation', __LINE__, __FILE__);
@@ -55,7 +54,6 @@ class Plugin {
 	}
 
 	public static function getMenu(GenericEvent $event) {
-		// will be executed when the licenses.settings event is dispatched
 		$menu = $event->getSubject();
 		$module = 'licenses';
 		if ($GLOBALS['tf']->ima == 'admin') {
@@ -66,7 +64,6 @@ class Plugin {
 	}
 
 	public static function getRequirements(GenericEvent $event) {
-		// will be executed when the licenses.loader event is dispatched
 		$loader = $event->getSubject();
 		$loader->add_requirement('crud_vestacp_list', '/../vendor/detain/crud/src/crud/crud_vestacp_list.php');
 		$loader->add_requirement('crud_reusable_vestacp', '/../vendor/detain/crud/src/crud/crud_reusable_vestacp.php');
@@ -83,7 +80,6 @@ class Plugin {
 	}
 
 	public static function getSettings(GenericEvent $event) {
-		// will be executed when the licenses.settings event is dispatched
 		$settings = $event->getSubject();
 		$settings->add_text_setting('licenses', 'Vestacp', 'vestacp_username', 'Vestacp Username:', 'Vestacp Username', $settings->get_setting('FANTASTICO_USERNAME'));
 		$settings->add_text_setting('licenses', 'Vestacp', 'vestacp_password', 'Vestacp Password:', 'Vestacp Password', $settings->get_setting('FANTASTICO_PASSWORD'));
