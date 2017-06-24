@@ -19,33 +19,42 @@ class Plugin {
 
 	public static function getHooks() {
 		return [
+			self::$module.'.settings' => [__CLASS__, 'getSettings'],
+			self::$module.'.activate' => [__CLASS__, 'getActivate'],
+			self::$module.'.reactivate' => [__CLASS__, 'getReactivate'],
 		];
 	}
 
 	public static function getActivate(GenericEvent $event) {
-		$license = $event->getSubject();
-		if ($event['category'] == SERVICE_TYPES_FANTASTICO) {
-			myadmin_log(self::$module, 'info', 'Vestacp Activation', __LINE__, __FILE__);
-			function_requirements('activate_vestacp');
-			activate_vestacp($license->get_ip(), $event['field1']);
+		$service = $event->getSubject();
+		if ($event['category'] == SERVICE_TYPES_WEB_VESTA) {
+			myadmin_log(self::$module, 'info', 'VestaCP Activation', __LINE__, __FILE__);
+			$event->stopPropagation();
+		}
+	}
+
+	public static function getReactivate(GenericEvent $event) {
+		$service = $event->getSubject();
+		if ($event['category'] == SERVICE_TYPES_WEB_VESTA) {
+			myadmin_log(self::$module, 'info', 'VestaCP Reactivation', __LINE__, __FILE__);
 			$event->stopPropagation();
 		}
 	}
 
 	public static function getChangeIp(GenericEvent $event) {
-		if ($event['category'] == SERVICE_TYPES_FANTASTICO) {
-			$license = $event->getSubject();
+		if ($event['category'] == SERVICE_TYPES_WEB_VESTA) {
+			$service = $event->getSubject();
 			$settings = get_module_settings(self::$module);
 			$vestacp = new Vestacp(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
-			myadmin_log(self::$module, 'info', "IP Change - (OLD:".$license->get_ip().") (NEW:{$event['newip']})", __LINE__, __FILE__);
-			$result = $vestacp->editIp($license->get_ip(), $event['newip']);
+			myadmin_log(self::$module, 'info', "IP Change - (OLD:".$service->get_ip().") (NEW:{$event['newip']})", __LINE__, __FILE__);
+			$result = $vestacp->editIp($service->get_ip(), $event['newip']);
 			if (isset($result['faultcode'])) {
-				myadmin_log(self::$module, 'error', 'Vestacp editIp('.$license->get_ip().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__);
+				myadmin_log(self::$module, 'error', 'VestaCP editIp('.$service->get_ip().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__);
 				$event['status'] = 'error';
 				$event['status_text'] = 'Error Code '.$result['faultcode'].': '.$result['fault'];
 			} else {
-				$GLOBALS['tf']->history->add($settings['TABLE'], 'change_ip', $event['newip'], $license->get_ip());
-				$license->set_ip($event['newip'])->save();
+				$GLOBALS['tf']->history->add($settings['TABLE'], 'change_ip', $event['newip'], $service->get_ip());
+				$service->set_ip($event['newip'])->save();
 				$event['status'] = 'ok';
 				$event['status_text'] = 'The IP Address has been changed.';
 			}
@@ -80,9 +89,8 @@ class Plugin {
 
 	public static function getSettings(GenericEvent $event) {
 		$settings = $event->getSubject();
-		$settings->add_text_setting(self::$module, 'Vestacp', 'vestacp_username', 'Vestacp Username:', 'Vestacp Username', $settings->get_setting('FANTASTICO_USERNAME'));
-		$settings->add_text_setting(self::$module, 'Vestacp', 'vestacp_password', 'Vestacp Password:', 'Vestacp Password', $settings->get_setting('FANTASTICO_PASSWORD'));
-		$settings->add_dropdown_setting(self::$module, 'Vestacp', 'outofstock_licenses_vestacp', 'Out Of Stock Vestacp Licenses', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_LICENSES_FANTASTICO'), array('0', '1'), array('No', 'Yes', ));
+		$settings->add_select_master(self::$module, 'Default Servers', self::$module, 'new_website_vesta_server', 'Default VestaCP Setup Server', NEW_WEBSITE_VESTA_SERVER, SERVICE_TYPES_WEB_VESTA);
+		$settings->add_dropdown_setting(self::$module, 'Out of Stock', 'outofstock_webhosting_vestacp', 'Out Of Stock VestaCP Webhosting', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_WEBHOSTING_VESTACP'), array('0', '1'), array('No', 'Yes', ));
 	}
 
 }
