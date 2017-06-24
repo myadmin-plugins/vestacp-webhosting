@@ -90,7 +90,7 @@ class Plugin {
 	public static function getSettings(GenericEvent $event) {
 		$settings = $event->getSubject();
 		$settings->add_select_master(self::$module, 'Default Servers', self::$module, 'new_website_vesta_server', 'Default VestaCP Setup Server', NEW_WEBSITE_VESTA_SERVER, SERVICE_TYPES_WEB_VESTA);
-		$settings->add_dropdown_setting(self::$module, 'Out of Stock', 'outofstock_webhosting_vestacp', 'Out Of Stock VestaCP Webhosting', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_WEBHOSTING_VESTACP'), array('0', '1'), array('No', 'Yes', ));
+		$settings->add_dropdown_setting(self::$module, 'Out of Stock', 'outofstock_webhosting_vestacp', 'Out Of Stock VestaCP Webhosting', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_WEBHOSTING_VESTACP'), array('0', '1'), array('No', 'Yes',));
 	}
 
 }
