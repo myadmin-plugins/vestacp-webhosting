@@ -25,7 +25,7 @@ class Plugin {
 	public static function getActivate(GenericEvent $event) {
 		$license = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_FANTASTICO) {
-			myadmin_log('licenses', 'info', 'Vestacp Activation', __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', 'Vestacp Activation', __LINE__, __FILE__);
 			function_requirements('activate_vestacp');
 			activate_vestacp($license->get_ip(), $event['field1']);
 			$event->stopPropagation();
@@ -35,12 +35,12 @@ class Plugin {
 	public static function getChangeIp(GenericEvent $event) {
 		if ($event['category'] == SERVICE_TYPES_FANTASTICO) {
 			$license = $event->getSubject();
-			$settings = get_module_settings('licenses');
+			$settings = get_module_settings(self::$module);
 			$vestacp = new Vestacp(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
-			myadmin_log('licenses', 'info', "IP Change - (OLD:".$license->get_ip().") (NEW:{$event['newip']})", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "IP Change - (OLD:".$license->get_ip().") (NEW:{$event['newip']})", __LINE__, __FILE__);
 			$result = $vestacp->editIp($license->get_ip(), $event['newip']);
 			if (isset($result['faultcode'])) {
-				myadmin_log('licenses', 'error', 'Vestacp editIp('.$license->get_ip().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__);
+				myadmin_log(self::$module, 'error', 'Vestacp editIp('.$license->get_ip().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__);
 				$event['status'] = 'error';
 				$event['status_text'] = 'Error Code '.$result['faultcode'].': '.$result['fault'];
 			} else {
@@ -55,11 +55,10 @@ class Plugin {
 
 	public static function getMenu(GenericEvent $event) {
 		$menu = $event->getSubject();
-		$module = 'licenses';
 		if ($GLOBALS['tf']->ima == 'admin') {
-			$menu->add_link($module, 'choice=none.reusable_vestacp', 'icons/database_warning_48.png', 'ReUsable Vestacp Licenses');
-			$menu->add_link($module, 'choice=none.vestacp_list', 'icons/database_warning_48.png', 'Vestacp Licenses Breakdown');
-			$menu->add_link($module.'api', 'choice=none.vestacp_licenses_list', 'whm/createacct.gif', 'List all Vestacp Licenses');
+			$menu->add_link(self::$module, 'choice=none.reusable_vestacp', 'icons/database_warning_48.png', 'ReUsable Vestacp Licenses');
+			$menu->add_link(self::$module, 'choice=none.vestacp_list', 'icons/database_warning_48.png', 'Vestacp Licenses Breakdown');
+			$menu->add_link(self::$module.'api', 'choice=none.vestacp_licenses_list', 'whm/createacct.gif', 'List all Vestacp Licenses');
 		}
 	}
 
@@ -81,9 +80,9 @@ class Plugin {
 
 	public static function getSettings(GenericEvent $event) {
 		$settings = $event->getSubject();
-		$settings->add_text_setting('licenses', 'Vestacp', 'vestacp_username', 'Vestacp Username:', 'Vestacp Username', $settings->get_setting('FANTASTICO_USERNAME'));
-		$settings->add_text_setting('licenses', 'Vestacp', 'vestacp_password', 'Vestacp Password:', 'Vestacp Password', $settings->get_setting('FANTASTICO_PASSWORD'));
-		$settings->add_dropdown_setting('licenses', 'Vestacp', 'outofstock_licenses_vestacp', 'Out Of Stock Vestacp Licenses', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_LICENSES_FANTASTICO'), array('0', '1'), array('No', 'Yes', ));
+		$settings->add_text_setting(self::$module, 'Vestacp', 'vestacp_username', 'Vestacp Username:', 'Vestacp Username', $settings->get_setting('FANTASTICO_USERNAME'));
+		$settings->add_text_setting(self::$module, 'Vestacp', 'vestacp_password', 'Vestacp Password:', 'Vestacp Password', $settings->get_setting('FANTASTICO_PASSWORD'));
+		$settings->add_dropdown_setting(self::$module, 'Vestacp', 'outofstock_licenses_vestacp', 'Out Of Stock Vestacp Licenses', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_LICENSES_FANTASTICO'), array('0', '1'), array('No', 'Yes', ));
 	}
 
 }
