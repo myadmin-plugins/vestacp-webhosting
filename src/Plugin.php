@@ -33,7 +33,7 @@ class Plugin {
 			list($user, $pass) = explode(':', $hash);
 			require_once(INCLUDE_ROOT . '/webhosting/VestaCP.php');
 			myadmin_log(self::$module, 'info', "Calling vesta = new VestaCP($ip, $user, ****************)", __LINE__, __FILE__);
-			$vesta = new VestaCP($ip, $user, $pass);
+			$vesta = new \VestaCP($ip, $user, $pass);
 			$package = 'default';
 			myadmin_log(self::$module, 'info', "Calling vesta->create_account({$username}, ****************, {$email}, {$data['name']}, {$package})", __LINE__, __FILE__);
 			if ($vesta->create_account($username, $password, $email, $data['name'], $package)) {
@@ -42,6 +42,7 @@ class Plugin {
 				$ip = $serverdata[$settings['PREFIX'].'_ip'];
 				$username = $db->real_escape($username);
 				$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='$ip', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$id}'", __LINE__, __FILE__);
+				function_requirements('website_welcome_email');
 				website_welcome_email($id);
 			} else {
 				request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'vesta', 'create_account', array('username' => $username, 'password' => $password, 'email' => $email, 'name' => $data['name'], 'package' => $package), $vesta->response);
