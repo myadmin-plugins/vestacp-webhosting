@@ -41,7 +41,7 @@ class Plugin {
 			$serverdata = get_service_master($serviceInfo[$settings['PREFIX'].'_server'], self::$module);
 			$hash = $serverdata[$settings['PREFIX'].'_key'];
 			$ip = $serverdata[$settings['PREFIX'].'_ip'];
-			$success = true;
+			$success = TRUE;
 			list($user, $pass) = explode(':', $hash);
 			myadmin_log(self::$module, 'info', 'VestaCP Reactivation', __LINE__, __FILE__);
 			require_once(INCLUDE_ROOT . '/webhosting/VestaCP.php');
@@ -51,7 +51,7 @@ class Plugin {
 				myadmin_log(self::$module, 'info', 'Success, Response: ' . json_encode($vesta->response), __LINE__, __FILE__);
 			} else {
 				myadmin_log(self::$module, 'info', 'Failure, Response: ' . json_encode($vesta->response), __LINE__, __FILE__);
-				$success = false;
+				$success = FALSE;
 			}
 			$event->stopPropagation();
 		}
