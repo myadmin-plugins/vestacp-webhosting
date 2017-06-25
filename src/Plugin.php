@@ -44,10 +44,10 @@ class Plugin {
 			$success = TRUE;
 			list($user, $pass) = explode(':', $hash);
 			myadmin_log(self::$module, 'info', 'VestaCP Reactivation', __LINE__, __FILE__);
-			require_once(INCLUDE_ROOT . '/webhosting/VestaCP.php');
+			require_once(INCLUDE_ROOT.'/webhosting/VestaCP.php');
 			$vesta = new \VestaCP($ip, $user, $pass);
-			myadmin_log(self::$module, 'info', "Calling vesta->unsuspend_account({$serviceInfo[$settings['PREFIX'] . '_username']})", __LINE__, __FILE__);
-			if ($vesta->unsuspend_account($serviceInfo[$settings['PREFIX'] . '_username'])) {
+			myadmin_log(self::$module, 'info', "Calling vesta->unsuspend_account({$serviceInfo[$settings['PREFIX'].'_username']})", __LINE__, __FILE__);
+			if ($vesta->unsuspend_account($serviceInfo[$settings['PREFIX'].'_username'])) {
 				myadmin_log(self::$module, 'info', 'Success, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
 			} else {
 				myadmin_log(self::$module, 'info', 'Failure, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
