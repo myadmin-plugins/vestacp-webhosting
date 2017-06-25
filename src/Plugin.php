@@ -29,6 +29,26 @@ class Plugin {
 		$service = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_WEB_VESTA) {
 			myadmin_log(self::$module, 'info', 'VestaCP Activation', __LINE__, __FILE__);
+			$data = $GLOBALS['tf']->accounts->read($service[$settings['PREFIX'].'_custid']);
+			list($user, $pass) = explode(':', $hash);
+			require_once(INCLUDE_ROOT . '/webhosting/VestaCP.php');
+			myadmin_log(self::$module, 'info', "Calling vesta = new VestaCP($ip, $user, ****************)", __LINE__, __FILE__);
+			$vesta = new VestaCP($ip, $user, $pass);
+			$package = 'default';
+			myadmin_log(self::$module, 'info', "Calling vesta->create_account({$username}, ****************, {$email}, {$data['name']}, {$package})", __LINE__, __FILE__);
+			if ($vesta->create_account($username, $password, $email, $data['name'], $package)) {
+				request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'vesta', 'create_account', array('username' => $username, 'password' => $password, 'email' => $email, 'name' => $data['name'], 'package' => $package), $vesta->response);
+				myadmin_log(self::$module, 'info', 'Success, Response: ' . var_export($vesta->response, true), __LINE__, __FILE__);
+				$ip = $serverdata[$settings['PREFIX'].'_ip'];
+				$username = $db->real_escape($username);
+				$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='$ip', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$id}'", __LINE__, __FILE__);
+				website_welcome_email($id);
+			} else {
+				request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'vesta', 'create_account', array('username' => $username, 'password' => $password, 'email' => $email, 'name' => $data['name'], 'package' => $package), $vesta->response);
+				add_output('Error Creating Website');
+				myadmin_log(self::$module, 'info', 'Failure, Response: ' . var_export($vesta->response, true), __LINE__, __FILE__);
+				return false;
+			}
 			$event->stopPropagation();
 		}
 	}
