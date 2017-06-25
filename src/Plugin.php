@@ -36,7 +36,23 @@ class Plugin {
 	public static function getReactivate(GenericEvent $event) {
 		$service = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_WEB_VESTA) {
+			$serviceInfo = $service->getServiceInfo();
+			$settings = get_module_settings(self::$module);
+			$serverdata = get_service_master($serviceInfo[$settings['PREFIX'].'_server'], self::$module);
+			$hash = $serverdata[$settings['PREFIX'].'_key'];
+			$ip = $serverdata[$settings['PREFIX'].'_ip'];
+			$success = true;
+			list($user, $pass) = explode(':', $hash);
 			myadmin_log(self::$module, 'info', 'VestaCP Reactivation', __LINE__, __FILE__);
+			require_once(INCLUDE_ROOT . '/webhosting/VestaCP.php');
+			$vesta = new \VestaCP($ip, $user, $pass);
+			myadmin_log(self::$module, 'info', "Calling vesta->unsuspend_account({$serviceInfo[$settings['PREFIX'] . '_username']})", __LINE__, __FILE__);
+			if ($vesta->unsuspend_account($serviceInfo[$settings['PREFIX'] . '_username'])) {
+				myadmin_log(self::$module, 'info', 'Success, Response: ' . json_encode($vesta->response), __LINE__, __FILE__);
+			} else {
+				myadmin_log(self::$module, 'info', 'Failure, Response: ' . json_encode($vesta->response), __LINE__, __FILE__);
+				$success = false;
+			}
 			$event->stopPropagation();
 		}
 	}
