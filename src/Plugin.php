@@ -31,9 +31,8 @@ class Plugin {
 			myadmin_log(self::$module, 'info', 'VestaCP Activation', __LINE__, __FILE__);
 			$data = $GLOBALS['tf']->accounts->read($service[$settings['PREFIX'].'_custid']);
 			list($user, $pass) = explode(':', $hash);
-			require_once(INCLUDE_ROOT.'/webhosting/VestaCP.php');
 			myadmin_log(self::$module, 'info', "Calling vesta = new VestaCP($ip, $user, ****************)", __LINE__, __FILE__);
-			$vesta = new \VestaCP($ip, $user, $pass);
+			$vesta = new VestaCP($ip, $user, $pass);
 			$package = 'default';
 			myadmin_log(self::$module, 'info', "Calling vesta->create_account({$username}, ****************, {$email}, {$data['name']}, {$package})", __LINE__, __FILE__);
 			if ($vesta->create_account($username, $password, $email, $data['name'], $package)) {
@@ -64,8 +63,7 @@ class Plugin {
 			$ip = $serverdata[$settings['PREFIX'].'_ip'];
 			list($user, $pass) = explode(':', $hash);
 			myadmin_log(self::$module, 'info', 'VestaCP Reactivation', __LINE__, __FILE__);
-			require_once(INCLUDE_ROOT.'/webhosting/VestaCP.php');
-			$vesta = new \VestaCP($ip, $user, $pass);
+			$vesta = new VestaCP($ip, $user, $pass);
 			myadmin_log(self::$module, 'info', "Calling vesta->unsuspend_account({$serviceInfo[$settings['PREFIX'].'_username']})", __LINE__, __FILE__);
 			if ($vesta->unsuspend_account($serviceInfo[$settings['PREFIX'].'_username'])) {
 				myadmin_log(self::$module, 'info', 'Success, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
