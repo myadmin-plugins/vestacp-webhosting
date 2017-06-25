@@ -77,7 +77,7 @@ class VestaCP {
 		if (is_null($this->response)) {
 			//echo "Null Response, Check Firewall Settings\n";
 			return FALSE;
-		} elseif($this->response == '0' || $this->response == 0) {
+		} elseif ($this->response == '0' || $this->response == 0) {
 			//echo "User account has been successfully created\n";
 		} else {
 			//echo "Query returned error code: " .$this->response. "\n";
@@ -117,10 +117,10 @@ class VestaCP {
 		$this->response = curl_exec($curl);
 
 		// Check result
-		if($this->response == '0' || $this->response == 0) {
+		if ($this->response == '0' || $this->response == 0) {
 			echo "Domain has been successfully created\n";
 		} else {
-			echo 'Query returned error code: '.$this->response . "\n";
+			echo 'Query returned error code: '.$this->response."\n";
 		}
 	}
 
@@ -158,10 +158,10 @@ class VestaCP {
 		$this->response = curl_exec($curl);
 
 		// Check result
-		if($this->response == '0' || $this->response == 0) {
+		if ($this->response == '0' || $this->response == 0) {
 			echo "Database has been successfully created\n";
 		} else {
-			echo 'Query returned error code: '.$this->response . "\n";
+			echo 'Query returned error code: '.$this->response."\n";
 		}
 	}
 
@@ -266,10 +266,10 @@ class VestaCP {
 		$this->response = curl_exec($curl);
 
 		// Check result
-		if($this->response == '0' || $this->response == 0) {
+		if ($this->response == '0' || $this->response == 0) {
 			echo "User account has been successfully deleted\n";
 		} else {
-			echo 'Query returned error code: '.$this->response . "\n";
+			echo 'Query returned error code: '.$this->response."\n";
 		}
 	}
 
@@ -302,10 +302,10 @@ class VestaCP {
 		$this->response = curl_exec($curl);
 
 		// Check result
-		if($this->response == '0') {
+		if ($this->response == '0') {
 			echo "User account has been successfully suspended\n";
 		} else {
-			echo 'Query returned error code: '.$this->response . "\n";
+			echo 'Query returned error code: '.$this->response."\n";
 		}
 	}
 
@@ -338,10 +338,10 @@ class VestaCP {
 		$this->response = curl_exec($curl);
 
 		// Check result
-		if($this->response == '0') {
+		if ($this->response == '0') {
 			echo "User account has been successfully unsuspended\n";
 		} else {
-			echo 'Query returned error code: '.$this->response . "\n";
+			echo 'Query returned error code: '.$this->response."\n";
 		}
 	}
 
@@ -375,7 +375,7 @@ class VestaCP {
 		$this->response = curl_exec($curl);
 
 		// Check result
-		if($this->response == '0' || $this->response == 0) {
+		if ($this->response == '0' || $this->response == 0) {
 			echo "OK: User can login\n";
 		} else {
 			echo "Error: Username or password is incorrect\n";
