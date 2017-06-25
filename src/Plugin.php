@@ -38,7 +38,7 @@ class Plugin {
 			myadmin_log(self::$module, 'info', "Calling vesta->create_account({$username}, ****************, {$email}, {$data['name']}, {$package})", __LINE__, __FILE__);
 			if ($vesta->create_account($username, $password, $email, $data['name'], $package)) {
 				request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'vesta', 'create_account', array('username' => $username, 'password' => $password, 'email' => $email, 'name' => $data['name'], 'package' => $package), $vesta->response);
-				myadmin_log(self::$module, 'info', 'Success, Response: '.var_export($vesta->response, true), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'Success, Response: '.var_export($vesta->response, TRUE), __LINE__, __FILE__);
 				$ip = $serverdata[$settings['PREFIX'].'_ip'];
 				$username = $db->real_escape($username);
 				$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='$ip', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$id}'", __LINE__, __FILE__);
@@ -47,8 +47,8 @@ class Plugin {
 			} else {
 				request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'vesta', 'create_account', array('username' => $username, 'password' => $password, 'email' => $email, 'name' => $data['name'], 'package' => $package), $vesta->response);
 				add_output('Error Creating Website');
-				myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($vesta->response, true), __LINE__, __FILE__);
-				return false;
+				myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($vesta->response, TRUE), __LINE__, __FILE__);
+				return FALSE;
 			}
 			$event->stopPropagation();
 		}
