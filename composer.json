@@ -1,7 +1,7 @@
 {
     "name": "detain/myadmin-vestacp-webhosting",
     "type": "myadmin-plugin",
-    "description": "Vestacp Webhosting Class",
+    "description": "VestaCP Webhosting Class",
     "keywords": ["vestacp","administration","license"],
     "license": "LGPL-2.1",
     "authors": [
@@ -28,6 +28,6 @@
 		"codacy/coverage": "dev-master"
 	},
     "autoload": {
-        "psr-4": {"Detain\\MyAdminVestacp\\": "src/"}
+        "psr-4": {"Detain\\MyAdminVestaCP\\": "src/"}
     }
 }

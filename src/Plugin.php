@@ -1,14 +1,14 @@
 <?php
 
-namespace Detain\MyAdminVestacp;
+namespace Detain\MyAdminVestaCP;
 
-use Detain\Vestacp\Vestacp;
+use Detain\MyAdminVestaCP\VestaCP;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
 class Plugin {
 
-	public static $name = 'Vestacp Webhosting';
-	public static $description = 'Allows selling of Vestacp Server and VPS License Types.  More info at https://www.netenberg.com/vestacp.php';
+	public static $name = 'VestaCP Webhosting';
+	public static $description = 'Allows selling of VestaCP Server and VPS License Types.  More info at https://www.netenberg.com/vestacp.php';
 	public static $help = 'It provides more than one million end users the ability to quickly install dozens of the leading open source content management systems into their web space.  	Must have a pre-existing cPanel license with cPanelDirect to purchase a vestacp license. Allow 10 minutes for activation.';
 	public static $module = 'webhosting';
 	public static $type = 'service';
@@ -81,7 +81,7 @@ class Plugin {
 		if ($event['category'] == SERVICE_TYPES_WEB_VESTA) {
 			$service = $event->getSubject();
 			$settings = get_module_settings(self::$module);
-			$vestacp = new Vestacp(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
+			$vestacp = new VestaCP(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
 			myadmin_log(self::$module, 'info', "IP Change - (OLD:".$service->get_ip().") (NEW:{$event['newip']})", __LINE__, __FILE__);
 			$result = $vestacp->editIp($service->get_ip(), $event['newip']);
 			if (isset($result['faultcode'])) {
@@ -101,9 +101,9 @@ class Plugin {
 	public static function getMenu(GenericEvent $event) {
 		$menu = $event->getSubject();
 		if ($GLOBALS['tf']->ima == 'admin') {
-			$menu->add_link(self::$module, 'choice=none.reusable_vestacp', 'icons/database_warning_48.png', 'ReUsable Vestacp Licenses');
-			$menu->add_link(self::$module, 'choice=none.vestacp_list', 'icons/database_warning_48.png', 'Vestacp Licenses Breakdown');
-			$menu->add_link(self::$module.'api', 'choice=none.vestacp_licenses_list', 'whm/createacct.gif', 'List all Vestacp Licenses');
+			$menu->add_link(self::$module, 'choice=none.reusable_vestacp', 'icons/database_warning_48.png', 'ReUsable VestaCP Licenses');
+			$menu->add_link(self::$module, 'choice=none.vestacp_list', 'icons/database_warning_48.png', 'VestaCP Licenses Breakdown');
+			$menu->add_link(self::$module.'api', 'choice=none.vestacp_licenses_list', 'whm/createacct.gif', 'List all VestaCP Licenses');
 		}
 	}
 
@@ -119,7 +119,7 @@ class Plugin {
 		$loader->add_requirement('activate_vestacp', '/../vendor/detain/myadmin-vestacp-webhosting/src/vestacp.inc.php');
 		$loader->add_requirement('get_reusable_vestacp', '/../vendor/detain/myadmin-vestacp-webhosting/src/vestacp.inc.php');
 		$loader->add_requirement('reusable_vestacp', '/../vendor/detain/myadmin-vestacp-webhosting/src/reusable_vestacp.php');
-		$loader->add_requirement('class.Vestacp', '/../vendor/detain/vestacp-webhosting/src/Vestacp.php');
+		$loader->add_requirement('class.VestaCP', '/../vendor/detain/vestacp-webhosting/src/VestaCP.php');
 		$loader->add_requirement('vps_add_vestacp', '/vps/addons/vps_add_vestacp.php');
 	}
 
