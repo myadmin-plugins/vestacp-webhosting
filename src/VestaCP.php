@@ -5,8 +5,7 @@ namespace Detain\MyAdminVestaCP;
 /**
  * Class VestaCP
  */
-class VestaCP
-{
+class VestaCP {
 	/**
 	 * @var string
 	 */
@@ -66,23 +65,23 @@ class VestaCP
 		// Send POST query via cURL
 		$postdata = http_build_query($postvars);
 		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, 'https://' . $this->hostname . ':8083/api/');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_URL, 'https://'.$this->hostname.':8083/api/');
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+		curl_setopt($curl, CURLOPT_POST, TRUE);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $postdata);
 		$this->response = curl_exec($curl);
 
 		// Check result
 		if (is_null($this->response)) {
 			//echo "Null Response, Check Firewall Settings\n";
-			return false;
+			return FALSE;
 		} elseif($this->response == '0' || $this->response == 0) {
 			//echo "User account has been successfully created\n";
 		} else {
 			//echo "Query returned error code: " .$this->response. "\n";
-			return false;
+			return FALSE;
 		}
 		return $this->response;
 	}
@@ -109,11 +108,11 @@ class VestaCP
 		// Send POST query via cURL
 		$postdata = http_build_query($postvars);
 		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, 'https://' . $this->hostname . ':8083/api/');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_URL, 'https://'.$this->hostname.':8083/api/');
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+		curl_setopt($curl, CURLOPT_POST, TRUE);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $postdata);
 		$this->response = curl_exec($curl);
 
@@ -121,7 +120,7 @@ class VestaCP
 		if($this->response == '0' || $this->response == 0) {
 			echo "Domain has been successfully created\n";
 		} else {
-			echo 'Query returned error code: ' . $this->response . "\n";
+			echo 'Query returned error code: '.$this->response . "\n";
 		}
 	}
 
@@ -150,11 +149,11 @@ class VestaCP
 
 		// Send POST query via cURL
 		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, 'https://' . $this->hostname . ':8083/api/');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_URL, 'https://'.$this->hostname.':8083/api/');
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+		curl_setopt($curl, CURLOPT_POST, TRUE);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $postdata);
 		$this->response = curl_exec($curl);
 
@@ -162,7 +161,7 @@ class VestaCP
 		if($this->response == '0' || $this->response == 0) {
 			echo "Database has been successfully created\n";
 		} else {
-			echo 'Query returned error code: ' . $this->response . "\n";
+			echo 'Query returned error code: '.$this->response . "\n";
 		}
 	}
 
@@ -186,16 +185,16 @@ class VestaCP
 		// Send POST query via cURL
 		$postdata = http_build_query($postvars);
 		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, 'https://' . $this->hostname . ':8083/api/');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_URL, 'https://'.$this->hostname.':8083/api/');
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+		curl_setopt($curl, CURLOPT_POST, TRUE);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $postdata);
 		$this->response = curl_exec($curl);
 
 		// Parse JSON output
-		$data = json_decode($this->response, true);
+		$data = json_decode($this->response, TRUE);
 
 		// Print result
 		print_r($data);
@@ -223,16 +222,16 @@ class VestaCP
 		// Send POST query via cURL
 		$postdata = http_build_query($postvars);
 		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, 'https://' . $this->hostname . ':8083/api/');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_URL, 'https://'.$this->hostname.':8083/api/');
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+		curl_setopt($curl, CURLOPT_POST, TRUE);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $postdata);
 		$this->response = curl_exec($curl);
 
 		// Parse JSON output
-		$data = json_decode($this->response, true);
+		$data = json_decode($this->response, TRUE);
 
 		// Print result
 		print_r($data);
@@ -258,11 +257,11 @@ class VestaCP
 		// Send POST query via cURL
 		$postdata = http_build_query($postvars);
 		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, 'https://' . $this->hostname . ':8083/api/');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_URL, 'https://'.$this->hostname.':8083/api/');
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+		curl_setopt($curl, CURLOPT_POST, TRUE);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $postdata);
 		$this->response = curl_exec($curl);
 
@@ -270,7 +269,7 @@ class VestaCP
 		if($this->response == '0' || $this->response == 0) {
 			echo "User account has been successfully deleted\n";
 		} else {
-			echo 'Query returned error code: ' . $this->response . "\n";
+			echo 'Query returned error code: '.$this->response . "\n";
 		}
 	}
 
@@ -294,11 +293,11 @@ class VestaCP
 		// Send POST query via cURL
 		$postdata = http_build_query($postvars);
 		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, 'https://' . $this->hostname . ':8083/api/');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_URL, 'https://'.$this->hostname.':8083/api/');
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+		curl_setopt($curl, CURLOPT_POST, TRUE);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $postdata);
 		$this->response = curl_exec($curl);
 
@@ -306,7 +305,7 @@ class VestaCP
 		if($this->response == '0') {
 			echo "User account has been successfully suspended\n";
 		} else {
-			echo 'Query returned error code: ' . $this->response . "\n";
+			echo 'Query returned error code: '.$this->response . "\n";
 		}
 	}
 
@@ -330,11 +329,11 @@ class VestaCP
 		// Send POST query via cURL
 		$postdata = http_build_query($postvars);
 		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, 'https://' . $this->hostname . ':8083/api/');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_URL, 'https://'.$this->hostname.':8083/api/');
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+		curl_setopt($curl, CURLOPT_POST, TRUE);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $postdata);
 		$this->response = curl_exec($curl);
 
@@ -342,7 +341,7 @@ class VestaCP
 		if($this->response == '0') {
 			echo "User account has been successfully unsuspended\n";
 		} else {
-			echo 'Query returned error code: ' . $this->response . "\n";
+			echo 'Query returned error code: '.$this->response . "\n";
 		}
 	}
 
@@ -367,11 +366,11 @@ class VestaCP
 		// Send POST query via cURL
 		$postdata = http_build_query($postvars);
 		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, 'https://' . $this->hostname . ':8083/api/');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_URL, 'https://'.$this->hostname.':8083/api/');
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+		curl_setopt($curl, CURLOPT_POST, TRUE);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $postdata);
 		$this->response = curl_exec($curl);
 
