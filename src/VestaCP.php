@@ -120,7 +120,7 @@ class VestaCP {
 		if ($this->response == '0' || $this->response == 0) {
 			echo "Domain has been successfully created\n";
 		} else {
-			echo 'Query returned error code: '.$this->response."\n";
+			echo 'Query returned error code: '.$this->response.PHP_EOL;
 		}
 	}
 
@@ -161,7 +161,7 @@ class VestaCP {
 		if ($this->response == '0' || $this->response == 0) {
 			echo "Database has been successfully created\n";
 		} else {
-			echo 'Query returned error code: '.$this->response."\n";
+			echo 'Query returned error code: '.$this->response.PHP_EOL;
 		}
 	}
 
@@ -269,7 +269,7 @@ class VestaCP {
 		if ($this->response == '0' || $this->response == 0) {
 			echo "User account has been successfully deleted\n";
 		} else {
-			echo 'Query returned error code: '.$this->response."\n";
+			echo 'Query returned error code: '.$this->response.PHP_EOL;
 		}
 	}
 
@@ -305,7 +305,7 @@ class VestaCP {
 		if ($this->response == '0') {
 			echo "User account has been successfully suspended\n";
 		} else {
-			echo 'Query returned error code: '.$this->response."\n";
+			echo 'Query returned error code: '.$this->response.PHP_EOL;
 		}
 	}
 
@@ -341,7 +341,7 @@ class VestaCP {
 		if ($this->response == '0') {
 			echo "User account has been successfully unsuspended\n";
 		} else {
-			echo 'Query returned error code: '.$this->response."\n";
+			echo 'Query returned error code: '.$this->response.PHP_EOL;
 		}
 	}
 
