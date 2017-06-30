@@ -34,7 +34,6 @@ class Plugin {
 			$serverdata = get_service_master($serviceInfo[$settings['PREFIX'].'_server'], self::$module);
 			$hash = $serverdata[$settings['PREFIX'].'_key'];
 			$ip = $serverdata[$settings['PREFIX'].'_ip'];
-			$extra = run_event('parse_service_extra', $serviceInfo[$settings['PREFIX'].'_extra'], self::$module);
 			$hostname = $serviceInfo[$settings['PREFIX'].'_hostname'];
 			if (trim($hostname) == '')
 				$hostname = $serviceInfo[$settings['PREFIX'].'_id'].'.server.com';
