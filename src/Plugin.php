@@ -26,35 +26,34 @@ class Plugin {
 	}
 
 	public static function getActivate(GenericEvent $event) {
-		$service = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_WEB_VESTA) {
 			myadmin_log(self::$module, 'info', 'VestaCP Activation', __LINE__, __FILE__);
-			$serviceInfo = $service->getServiceInfo();
+			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
-			$serverdata = get_service_master($serviceInfo[$settings['PREFIX'].'_server'], self::$module);
+			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
 			$hash = $serverdata[$settings['PREFIX'].'_key'];
 			$ip = $serverdata[$settings['PREFIX'].'_ip'];
-			$hostname = $serviceInfo[$settings['PREFIX'].'_hostname'];
+			$hostname = $serviceClass->getHostname();
 			if (trim($hostname) == '')
-				$hostname = $serviceInfo[$settings['PREFIX'].'_id'].'.server.com';
-			$password = website_get_password($serviceInfo[$settings['PREFIX'].'_id']);
-			$username = get_new_webhosting_username($serviceInfo[$settings['PREFIX'].'_id'], $hostname, $serviceInfo[$settings['PREFIX'].'_server']);
-			$data = $GLOBALS['tf']->accounts->read($serviceInfo[$settings['PREFIX'].'_custid']);
+				$hostname = $serviceClass->getId().'.server.com';
+			$password = website_get_password($serviceClass->getId());
+			$username = get_new_webhosting_username($serviceClass->getId(), $hostname, $serviceClass->getServer());
+			$data = $GLOBALS['tf']->accounts->read($serviceClass->getCustid());
 			list($user, $pass) = explode(':', $hash);
 			myadmin_log(self::$module, 'info', "Calling vesta = new VestaCP($ip, $user, ****************)", __LINE__, __FILE__);
 			$vesta = new VestaCP($ip, $user, $pass);
 			$package = 'default';
 			myadmin_log(self::$module, 'info', "Calling vesta->create_account({$username}, ****************, {$email}, {$data['name']}, {$package})", __LINE__, __FILE__);
 			if ($vesta->create_account($username, $password, $email, $data['name'], $package)) {
-				request_log(self::$module, $serviceInfo[$settings['PREFIX'].'_custid'], __FUNCTION__, 'vesta', 'create_account', array('username' => $username, 'password' => $password, 'email' => $email, 'name' => $data['name'], 'package' => $package), $vesta->response);
+				request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'vesta', 'create_account', array('username' => $username, 'password' => $password, 'email' => $email, 'name' => $data['name'], 'package' => $package), $vesta->response);
 				myadmin_log(self::$module, 'info', 'Success, Response: '.var_export($vesta->response, TRUE), __LINE__, __FILE__);
 				$ip = $serverdata[$settings['PREFIX'].'_ip'];
 				$username = $db->real_escape($username);
-				$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='$ip', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceInfo[$settings['PREFIX'].'_id']}'", __LINE__, __FILE__);
+				$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='$ip', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceClass->getId()}'", __LINE__, __FILE__);
 				function_requirements('website_welcome_email');
-				website_welcome_email($serviceInfo[$settings['PREFIX'].'_id']);
+				website_welcome_email($serviceClass->getId());
 			} else {
-				request_log(self::$module, $serviceInfo[$settings['PREFIX'].'_custid'], __FUNCTION__, 'vesta', 'create_account', array('username' => $username, 'password' => $password, 'email' => $email, 'name' => $data['name'], 'package' => $package), $vesta->response);
+				request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'vesta', 'create_account', array('username' => $username, 'password' => $password, 'email' => $email, 'name' => $data['name'], 'package' => $package), $vesta->response);
 				add_output('Error Creating Website');
 				myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($vesta->response, TRUE), __LINE__, __FILE__);
 				return FALSE;
@@ -64,18 +63,17 @@ class Plugin {
 	}
 
 	public static function getReactivate(GenericEvent $event) {
-		$service = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_WEB_VESTA) {
-			$serviceInfo = $service->getServiceInfo();
+			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
-			$serverdata = get_service_master($serviceInfo[$settings['PREFIX'].'_server'], self::$module);
+			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
 			$hash = $serverdata[$settings['PREFIX'].'_key'];
 			$ip = $serverdata[$settings['PREFIX'].'_ip'];
 			list($user, $pass) = explode(':', $hash);
 			myadmin_log(self::$module, 'info', 'VestaCP Reactivation', __LINE__, __FILE__);
 			$vesta = new VestaCP($ip, $user, $pass);
-			myadmin_log(self::$module, 'info', "Calling vesta->unsuspend_account({$serviceInfo[$settings['PREFIX'].'_username']})", __LINE__, __FILE__);
-			if ($vesta->unsuspend_account($serviceInfo[$settings['PREFIX'].'_username'])) {
+			myadmin_log(self::$module, 'info', "Calling vesta->unsuspend_account({$serviceClass->getUsername()})", __LINE__, __FILE__);
+			if ($vesta->unsuspend_account($serviceClass->getUsername())) {
 				myadmin_log(self::$module, 'info', 'Success, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
 			} else {
 				myadmin_log(self::$module, 'info', 'Failure, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
@@ -87,17 +85,17 @@ class Plugin {
 
 	public static function getChangeIp(GenericEvent $event) {
 		if ($event['category'] == SERVICE_TYPES_WEB_VESTA) {
-			$service = $event->getSubject();
+			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
 			$vestacp = new VestaCP(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
-			myadmin_log(self::$module, 'info', "IP Change - (OLD:".$service->get_ip().") (NEW:{$event['newip']})", __LINE__, __FILE__);
-			$result = $vestacp->editIp($service->get_ip(), $event['newip']);
+			myadmin_log(self::$module, 'info', "IP Change - (OLD:".$serviceClass->getIp().") (NEW:{$event['newip']})", __LINE__, __FILE__);
+			$result = $vestacp->editIp($serviceClass->getIp(), $event['newip']);
 			if (isset($result['faultcode'])) {
-				myadmin_log(self::$module, 'error', 'VestaCP editIp('.$service->get_ip().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__);
+				myadmin_log(self::$module, 'error', 'VestaCP editIp('.$serviceClass->getIp().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__);
 				$event['status'] = 'error';
 				$event['status_text'] = 'Error Code '.$result['faultcode'].': '.$result['fault'];
 			} else {
-				$GLOBALS['tf']->history->add($settings['TABLE'], 'change_ip', $event['newip'], $service->get_ip());
+				$GLOBALS['tf']->history->add($settings['TABLE'], 'change_ip', $event['newip'], $serviceClass->getIp());
 				$service->set_ip($event['newip'])->save();
 				$event['status'] = 'ok';
 				$event['status_text'] = 'The IP Address has been changed.';
