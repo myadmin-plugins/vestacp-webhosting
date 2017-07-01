@@ -42,7 +42,7 @@ class VestaCP {
 	 * @param string $package
 	 * @return bool|mixed|string
 	 */
-	public function create_account($username, $password, $email, $name, $package = 'default') {
+	public function createAccount($username, $password, $email, $name, $package = 'default') {
 		$firstName = trim(mb_substr($name, 0, mb_strpos(' ', $name)));
 		$lastName = trim(mb_substr($name, mb_strpos(' ', $name) + 1));
 		$vstReturncode = 'yes';
@@ -90,7 +90,7 @@ class VestaCP {
 	 * @param string $username
 	 * @param string $domain
 	 */
-	public function add_web_dns_mail_domain($username, $domain) {
+	public function addWebDnsMailDomain($username, $domain) {
 		$vstReturncode = 'yes';
 		$vstCommand = 'v-add-domain';
 
@@ -130,7 +130,7 @@ class VestaCP {
 	 * @param string $dbUser
 	 * @param string $dbPass
 	 */
-	public function add_database($username, $dbName, $dbUser, $dbPass) {
+	public function addDatabase($username, $dbName, $dbUser, $dbPass) {
 		$vstReturncode = 'yes';
 		$vstCommand = 'v-add-database';
 
@@ -169,7 +169,7 @@ class VestaCP {
 	 * @param string $username
 	 * @param string $format
 	 */
-	public function list_account($username, $format = 'json') {
+	public function listAccount($username, $format = 'json') {
 		$vstCommand = 'v-list_user';
 
 		// Prepare POST query
@@ -205,7 +205,7 @@ class VestaCP {
 	 * @param string $domain
 	 * @param string $format
 	 */
-	public function list_web_domains($username, $domain, $format = 'json') {
+	public function listWebDomains($username, $domain, $format = 'json') {
 		$vstCommand = 'v-list-web-domain';
 
 		// Prepare POST query
@@ -240,7 +240,7 @@ class VestaCP {
 	/**
 	 * @param string $username
 	 */
-	public function delete_account($username) {
+	public function deleteAccount($username) {
 		$vstReturncode = 'yes';
 		$vstCommand = 'v-delete-user';
 
@@ -276,7 +276,7 @@ class VestaCP {
 	/**
 	 * @param string $username
 	 */
-	public function suspend_account($username) {
+	public function suspendAccount($username) {
 		$vstReturncode = 'yes';
 		$vstCommand = 'v-suspend-user';
 
@@ -312,7 +312,7 @@ class VestaCP {
 	/**
 	 * @param string $username
 	 */
-	public function unsuspend_account($username) {
+	public function unsuspendAccount($username) {
 		$vstReturncode = 'yes';
 		$vstCommand = 'v-unsuspend-user';
 
@@ -349,9 +349,8 @@ class VestaCP {
 	 * @param string $username
 	 * @param string $password
 	 */
-	public function check_user_pass($username, $password) {
+	public function checkUserPass($username, $password) {
 		$vstCommand = 'v-check-user-password';
-		$vstReturncode = 'yes';
 
 		// Prepare POST query
 		$postvars = array(
