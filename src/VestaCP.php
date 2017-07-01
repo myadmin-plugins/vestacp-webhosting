@@ -43,22 +43,22 @@ class VestaCP {
 	 * @return bool|mixed|string
 	 */
 	public function create_account($username, $password, $email, $name, $package = 'default') {
-		$first_name = trim(mb_substr($name, 0, mb_strpos(' ', $name)));
-		$last_name = trim(mb_substr($name, mb_strpos(' ', $name) + 1));
-		$vst_returncode = 'yes';
-		$vst_command = 'v-add-user';
+		$firstName = trim(mb_substr($name, 0, mb_strpos(' ', $name)));
+		$lastName = trim(mb_substr($name, mb_strpos(' ', $name) + 1));
+		$vstReturncode = 'yes';
+		$vstCommand = 'v-add-user';
 		// Prepare POST query
 		$postvars = array(
 			'user' => $this->username,
 			'password' => $this->password,
-			'returncode' => $vst_returncode,
-			'cmd' => $vst_command,
+			'returncode' => $vstReturncode,
+			'cmd' => $vstCommand,
 			'arg1' => $username,
 			'arg2' => $password,
 			'arg3' => $email,
 			'arg4' => $package,
-			'arg5' => $first_name,
-			'arg6' => $last_name
+			'arg5' => $firstName,
+			'arg6' => $lastName
 		);
 		$postdata = http_build_query($postvars);
 
@@ -91,15 +91,15 @@ class VestaCP {
 	 * @param string $domain
 	 */
 	public function add_web_dns_mail_domain($username, $domain) {
-		$vst_returncode = 'yes';
-		$vst_command = 'v-add-domain';
+		$vstReturncode = 'yes';
+		$vstCommand = 'v-add-domain';
 
 		// Prepare POST query
 		$postvars = array(
 			'user' => $this->username,
 			'password' => $this->password,
-			'returncode' => $vst_returncode,
-			'cmd' => $vst_command,
+			'returncode' => $vstReturncode,
+			'cmd' => $vstCommand,
 			'arg1' => $username,
 			'arg2' => $domain
 		);
@@ -126,24 +126,24 @@ class VestaCP {
 
 	/**
 	 * @param string $username
-	 * @param string $db_name
-	 * @param string $db_user
-	 * @param string $db_pass
+	 * @param string $dbName
+	 * @param string $dbUser
+	 * @param string $dbPass
 	 */
-	public function add_database($username, $db_name, $db_user, $db_pass) {
-		$vst_returncode = 'yes';
-		$vst_command = 'v-add-database';
+	public function add_database($username, $dbName, $dbUser, $dbPass) {
+		$vstReturncode = 'yes';
+		$vstCommand = 'v-add-database';
 
 		// Prepare POST query
 		$postvars = array(
 			'user' => $this->username,
 			'password' => $this->password,
-			'returncode' => $vst_returncode,
-			'cmd' => $vst_command,
+			'returncode' => $vstReturncode,
+			'cmd' => $vstCommand,
 			'arg1' => $username,
-			'arg2' => $db_name,
-			'arg3' => $db_user,
-			'arg4' => $db_pass
+			'arg2' => $dbName,
+			'arg3' => $dbUser,
+			'arg4' => $dbPass
 		);
 		$postdata = http_build_query($postvars);
 
@@ -170,13 +170,13 @@ class VestaCP {
 	 * @param string $format
 	 */
 	public function list_account($username, $format = 'json') {
-		$vst_command = 'v-list_user';
+		$vstCommand = 'v-list_user';
 
 		// Prepare POST query
 		$postvars = array(
 			'user' => $this->username,
 			'password' => $this->password,
-			'cmd' => $vst_command,
+			'cmd' => $vstCommand,
 			'arg1' => $username,
 			'arg2' => $format
 		);
@@ -206,13 +206,13 @@ class VestaCP {
 	 * @param string $format
 	 */
 	public function list_web_domains($username, $domain, $format = 'json') {
-		$vst_command = 'v-list-web-domain';
+		$vstCommand = 'v-list-web-domain';
 
 		// Prepare POST query
 		$postvars = array(
 			'user' => $this->username,
 			'password' => $this->password,
-			'cmd' => $vst_command,
+			'cmd' => $vstCommand,
 			'arg1' => $username,
 			'arg2' => $domain,
 			'arg3' => $format
@@ -241,15 +241,15 @@ class VestaCP {
 	 * @param string $username
 	 */
 	public function delete_account($username) {
-		$vst_returncode = 'yes';
-		$vst_command = 'v-delete-user';
+		$vstReturncode = 'yes';
+		$vstCommand = 'v-delete-user';
 
 		// Prepare POST query
 		$postvars = array(
 			'user' => $this->username,
 			'password' => $this->password,
-			'returncode' => $vst_returncode,
-			'cmd' => $vst_command,
+			'returncode' => $vstReturncode,
+			'cmd' => $vstCommand,
 			'arg1' => $username
 		);
 		$postdata = http_build_query($postvars);
@@ -277,15 +277,15 @@ class VestaCP {
 	 * @param string $username
 	 */
 	public function suspend_account($username) {
-		$vst_returncode = 'yes';
-		$vst_command = 'v-suspend-user';
+		$vstReturncode = 'yes';
+		$vstCommand = 'v-suspend-user';
 
 		// Prepare POST query
 		$postvars = array(
 			'user' => $this->username,
 			'password' => $this->password,
-			'returncode' => $vst_returncode,
-			'cmd' => $vst_command,
+			'returncode' => $vstReturncode,
+			'cmd' => $vstCommand,
 			'arg1' => $username
 		);
 		$postdata = http_build_query($postvars);
@@ -313,15 +313,15 @@ class VestaCP {
 	 * @param string $username
 	 */
 	public function unsuspend_account($username) {
-		$vst_returncode = 'yes';
-		$vst_command = 'v-unsuspend-user';
+		$vstReturncode = 'yes';
+		$vstCommand = 'v-unsuspend-user';
 
 		// Prepare POST query
 		$postvars = array(
 			'user' => $this->username,
 			'password' => $this->password,
-			'returncode' => $vst_returncode,
-			'cmd' => $vst_command,
+			'returncode' => $vstReturncode,
+			'cmd' => $vstCommand,
 			'arg1' => $username
 		);
 		$postdata = http_build_query($postvars);
@@ -350,14 +350,14 @@ class VestaCP {
 	 * @param string $password
 	 */
 	public function check_user_pass($username, $password) {
-		$vst_command = 'v-check-user-password';
-		$vst_returncode = 'yes';
+		$vstCommand = 'v-check-user-password';
+		$vstReturncode = 'yes';
 
 		// Prepare POST query
 		$postvars = array(
 			'user' => $this->username,
 			'password' => $this->password,
-			'cmd' => $vst_command,
+			'cmd' => $vstCommand,
 			'arg1' => $username,
 			'arg2' => $password
 		);
