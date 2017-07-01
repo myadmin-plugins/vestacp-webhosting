@@ -53,11 +53,12 @@ class Plugin {
 				$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='$ip', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceClass->getId()}'", __LINE__, __FILE__);
 				function_requirements('website_welcome_email');
 				website_welcome_email($serviceClass->getId());
+				$event['success'] = TRUE;
 			} else {
 				request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'vesta', 'create_account', array('username' => $username, 'password' => $password, 'email' => $event['email'], 'name' => $data['name'], 'package' => $package), $vesta->response);
 				add_output('Error Creating Website');
 				myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($vesta->response, TRUE), __LINE__, __FILE__);
-				return FALSE;
+				$event['success'] = FALSE;
 			}
 			$event->stopPropagation();
 		}
