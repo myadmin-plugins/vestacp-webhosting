@@ -43,17 +43,18 @@ class Plugin {
 			myadmin_log(self::$module, 'info', "Calling vesta = new VestaCP($ip, $user, ****************)", __LINE__, __FILE__);
 			$vesta = new VestaCP($ip, $user, $pass);
 			$package = 'default';
-			myadmin_log(self::$module, 'info', "Calling vesta->create_account({$username}, ****************, {$email}, {$data['name']}, {$package})", __LINE__, __FILE__);
-			if ($vesta->create_account($username, $password, $email, $data['name'], $package)) {
-				request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'vesta', 'create_account', array('username' => $username, 'password' => $password, 'email' => $email, 'name' => $data['name'], 'package' => $package), $vesta->response);
+			myadmin_log(self::$module, 'info', "Calling vesta->create_account({$username}, ****************, {$event['email']}, {$data['name']}, {$package})", __LINE__, __FILE__);
+			if ($vesta->create_account($username, $password, $event['email'], $data['name'], $package)) {
+				request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'vesta', 'create_account', array('username' => $username, 'password' => $password, 'email' => $event['email'], 'name' => $data['name'], 'package' => $package), $vesta->response);
 				myadmin_log(self::$module, 'info', 'Success, Response: '.var_export($vesta->response, TRUE), __LINE__, __FILE__);
 				$ip = $serverdata[$settings['PREFIX'].'_ip'];
+				$db = get_module_db(self::$module);
 				$username = $db->real_escape($username);
 				$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='$ip', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceClass->getId()}'", __LINE__, __FILE__);
 				function_requirements('website_welcome_email');
 				website_welcome_email($serviceClass->getId());
 			} else {
-				request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'vesta', 'create_account', array('username' => $username, 'password' => $password, 'email' => $email, 'name' => $data['name'], 'package' => $package), $vesta->response);
+				request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'vesta', 'create_account', array('username' => $username, 'password' => $password, 'email' => $event['email'], 'name' => $data['name'], 'package' => $package), $vesta->response);
 				add_output('Error Creating Website');
 				myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($vesta->response, TRUE), __LINE__, __FILE__);
 				return FALSE;
