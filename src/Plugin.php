@@ -116,16 +116,16 @@ class Plugin {
 			$hash = $serverdata[$settings['PREFIX'].'_key'];
 			$ip = $serverdata[$settings['PREFIX'].'_ip'];
 			if (trim($serviceClass->getUsername()) == '')
-				return true;
+				return TRUE;
 			list($user, $pass) = explode(':', $hash);
 			$vesta = new \Detain\MyAdminVestaCP\VestaCP($ip, $user, $pass);
 			myadmin_log(self::$module, 'info', "Calling vesta->suspendAccount({$serviceClass->getUsername()})", __LINE__, __FILE__);
 			if ($vesta->deleteAccount($serviceClass->getUsername())) {
 				myadmin_log(self::$module, 'info', 'Success, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
-				return true;
+				return TRUE;
 			} else {
 				myadmin_log(self::$module, 'info', 'Failure, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
-				return false;
+				return FALSE;
 			}
 			$event->stopPropagation();
 		}
