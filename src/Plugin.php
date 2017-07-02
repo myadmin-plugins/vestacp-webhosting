@@ -91,7 +91,6 @@ class Plugin {
 		if ($event['category'] == SERVICE_TYPES_WEB_VESTA) {
 			myadmin_log(self::$module, 'info', 'VestaCP Deactivation', __LINE__, __FILE__);
 			$serviceClass = $event->getSubject();
-			$serviceTypes = run_event('get_service_types', FALSE, self::$module);
 			$settings = get_module_settings(self::$module);
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
 			$hash = $serverdata[$settings['PREFIX'].'_key'];
@@ -112,7 +111,6 @@ class Plugin {
 		if ($event['category'] == SERVICE_TYPES_WEB_VESTA) {
 			myadmin_log(self::$module, 'info', 'VestaCP Termination', __LINE__, __FILE__);
 			$serviceClass = $event->getSubject();
-			$serviceTypes = run_event('get_service_types', FALSE, self::$module);
 			$settings = get_module_settings(self::$module);
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
 			$hash = $serverdata[$settings['PREFIX'].'_key'];
