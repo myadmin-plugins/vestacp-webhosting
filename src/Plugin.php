@@ -8,8 +8,8 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 class Plugin {
 
 	public static $name = 'VestaCP Webhosting';
-	public static $description = 'Allows selling of VestaCP Server and VPS License Types.  More info at https://www.netenberg.com/vestacp.php';
-	public static $help = 'It provides more than one million end users the ability to quickly install dozens of the leading open source content management systems into their web space.  	Must have a pre-existing cPanel license with cPanelDirect to purchase a vestacp license. Allow 10 minutes for activation.';
+	public static $description = 'Simple & Clever Hosting Control Panel.  More info at https://vestacp.com/';
+	public static $help = '';
 	public static $module = 'webhosting';
 	public static $type = 'service';
 
