@@ -99,9 +99,9 @@ class Plugin {
 			$vesta = new \Detain\MyAdminVestaCP\VestaCP($ip, $user, $pass);
 			myadmin_log(self::$module, 'info', "Calling vesta->suspendAccount({$serviceClass->getUsername()})", __LINE__, __FILE__);
 			if ($vesta->suspendAccount($serviceClass->getUsername())) {
-				myadmin_log(self::$module, 'info', 'Success, Response: ' . json_encode($vesta->response), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'Success, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
 			} else {
-				myadmin_log(self::$module, 'info', 'Failure, Response: ' . json_encode($vesta->response), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'Failure, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
 			}
 			$event->stopPropagation();
 		}
@@ -121,10 +121,10 @@ class Plugin {
 			$vesta = new \Detain\MyAdminVestaCP\VestaCP($ip, $user, $pass);
 			myadmin_log(self::$module, 'info', "Calling vesta->suspendAccount({$serviceClass->getUsername()})", __LINE__, __FILE__);
 			if ($vesta->deleteAccount($serviceClass->getUsername())) {
-				myadmin_log(self::$module, 'info', 'Success, Response: ' . json_encode($vesta->response), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'Success, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
 				return true;
 			} else {
-				myadmin_log(self::$module, 'info', 'Failure, Response: ' . json_encode($vesta->response), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'Failure, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
 				return false;
 			}
 			$event->stopPropagation();
