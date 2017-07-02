@@ -93,6 +93,19 @@ class Plugin {
 			$serviceClass = $event->getSubject();
 			$serviceTypes = run_event('get_service_types', FALSE, self::$module);
 			$settings = get_module_settings(self::$module);
+			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
+			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
+			$hash = $serverdata[$settings['PREFIX'].'_key'];
+			$ip = $serverdata[$settings['PREFIX'].'_ip'];
+			$data = $GLOBALS['tf']->accounts->read($serviceClass->getCustid());
+			list($user, $pass) = explode(':', $hash);
+			$vesta = new \Detain\MyAdminVestaCP\VestaCP($ip, $user, $pass);
+			myadmin_log(self::$module, 'info', "Calling vesta->suspendAccount({$serviceClass->getUsername()})", __LINE__, __FILE__);
+			if ($vesta->suspendAccount($serviceClass->getUsername())) {
+				myadmin_log(self::$module, 'info', 'Success, Response: ' . json_encode($vesta->response), __LINE__, __FILE__);
+			} else {
+				myadmin_log(self::$module, 'info', 'Failure, Response: ' . json_encode($vesta->response), __LINE__, __FILE__);
+			}
 			$event->stopPropagation();
 		}
 	}
@@ -103,6 +116,23 @@ class Plugin {
 			$serviceClass = $event->getSubject();
 			$serviceTypes = run_event('get_service_types', FALSE, self::$module);
 			$settings = get_module_settings(self::$module);
+			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
+			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
+			$hash = $serverdata[$settings['PREFIX'].'_key'];
+			$ip = $serverdata[$settings['PREFIX'].'_ip'];
+			if (trim($serviceClass->getUsername()) == '')
+				return true;
+			$data = $GLOBALS['tf']->accounts->read($serviceClass->getCustid());
+			list($user, $pass) = explode(':', $hash);
+			$vesta = new \Detain\MyAdminVestaCP\VestaCP($ip, $user, $pass);
+			myadmin_log(self::$module, 'info', "Calling vesta->suspendAccount({$serviceClass->getUsername()})", __LINE__, __FILE__);
+			if ($vesta->deleteAccount($serviceClass->getUsername())) {
+				myadmin_log(self::$module, 'info', 'Success, Response: ' . json_encode($vesta->response), __LINE__, __FILE__);
+				return true;
+			} else {
+				myadmin_log(self::$module, 'info', 'Failure, Response: ' . json_encode($vesta->response), __LINE__, __FILE__);
+				return false;
+			}
 			$event->stopPropagation();
 		}
 	}
