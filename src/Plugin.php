@@ -28,7 +28,7 @@ class Plugin {
 	}
 
 	public static function getActivate(GenericEvent $event) {
-		if ($event['category'] == SERVICE_TYPES_WEB_VESTA) {
+		if ($event['category'] == get_service_define('WEB_VESTA')) {
 			myadmin_log(self::$module, 'info', 'VestaCP Activation', __LINE__, __FILE__);
 			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
@@ -67,7 +67,7 @@ class Plugin {
 	}
 
 	public static function getReactivate(GenericEvent $event) {
-		if ($event['category'] == SERVICE_TYPES_WEB_VESTA) {
+		if ($event['category'] == get_service_define('WEB_VESTA')) {
 			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
@@ -88,7 +88,7 @@ class Plugin {
 	}
 
 	public static function getDeactivate(GenericEvent $event) {
-		if ($event['category'] == SERVICE_TYPES_WEB_VESTA) {
+		if ($event['category'] == get_service_define('WEB_VESTA')) {
 			myadmin_log(self::$module, 'info', 'VestaCP Deactivation', __LINE__, __FILE__);
 			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
@@ -108,7 +108,7 @@ class Plugin {
 	}
 
 	public static function getTerminate(GenericEvent $event) {
-		if ($event['category'] == SERVICE_TYPES_WEB_VESTA) {
+		if ($event['category'] == get_service_define('WEB_VESTA')) {
 			myadmin_log(self::$module, 'info', 'VestaCP Termination', __LINE__, __FILE__);
 			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
@@ -132,7 +132,7 @@ class Plugin {
 	}
 
 	public static function getChangeIp(GenericEvent $event) {
-		if ($event['category'] == SERVICE_TYPES_WEB_VESTA) {
+		if ($event['category'] == get_service_define('WEB_VESTA')) {
 			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
 			$vestacp = new VestaCP(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
@@ -179,7 +179,7 @@ class Plugin {
 
 	public static function getSettings(GenericEvent $event) {
 		$settings = $event->getSubject();
-		$settings->add_select_master(self::$module, 'Default Servers', self::$module, 'new_website_vesta_server', 'Default VestaCP Setup Server', NEW_WEBSITE_VESTA_SERVER, SERVICE_TYPES_WEB_VESTA);
+		$settings->add_select_master(self::$module, 'Default Servers', self::$module, 'new_website_vesta_server', 'Default VestaCP Setup Server', NEW_WEBSITE_VESTA_SERVER, get_service_define('WEB_VESTA'));
 		$settings->add_dropdown_setting(self::$module, 'Out of Stock', 'outofstock_webhosting_vestacp', 'Out Of Stock VestaCP Webhosting', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_WEBHOSTING_VESTACP'), ['0', '1'], ['No', 'Yes']);
 	}
 
