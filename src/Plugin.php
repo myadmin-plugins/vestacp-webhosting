@@ -5,6 +5,11 @@ namespace Detain\MyAdminVestaCP;
 use Detain\MyAdminVestaCP\VestaCP;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
+/**
+ * Class Plugin
+ *
+ * @package Detain\MyAdminVestaCP
+ */
 class Plugin {
 
 	public static $name = 'VestaCP Webhosting';
@@ -13,10 +18,15 @@ class Plugin {
 	public static $module = 'webhosting';
 	public static $type = 'service';
 
-
+	/**
+	 * Plugin constructor.
+	 */
 	public function __construct() {
 	}
 
+	/**
+	 * @return array
+	 */
 	public static function getHooks() {
 		return [
 			self::$module.'.settings' => [__CLASS__, 'getSettings'],
@@ -27,6 +37,9 @@ class Plugin {
 		];
 	}
 
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 */
 	public static function getActivate(GenericEvent $event) {
 		if ($event['category'] == get_service_define('WEB_VESTA')) {
 			myadmin_log(self::$module, 'info', 'VestaCP Activation', __LINE__, __FILE__);
@@ -66,6 +79,9 @@ class Plugin {
 		}
 	}
 
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 */
 	public static function getReactivate(GenericEvent $event) {
 		if ($event['category'] == get_service_define('WEB_VESTA')) {
 			$serviceClass = $event->getSubject();
@@ -87,6 +103,9 @@ class Plugin {
 		}
 	}
 
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 */
 	public static function getDeactivate(GenericEvent $event) {
 		if ($event['category'] == get_service_define('WEB_VESTA')) {
 			myadmin_log(self::$module, 'info', 'VestaCP Deactivation', __LINE__, __FILE__);
@@ -107,6 +126,10 @@ class Plugin {
 		}
 	}
 
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 * @return bool
+	 */
 	public static function getTerminate(GenericEvent $event) {
 		if ($event['category'] == get_service_define('WEB_VESTA')) {
 			myadmin_log(self::$module, 'info', 'VestaCP Termination', __LINE__, __FILE__);
@@ -131,6 +154,9 @@ class Plugin {
 		}
 	}
 
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 */
 	public static function getChangeIp(GenericEvent $event) {
 		if ($event['category'] == get_service_define('WEB_VESTA')) {
 			$serviceClass = $event->getSubject();
@@ -152,6 +178,9 @@ class Plugin {
 		}
 	}
 
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 */
 	public static function getMenu(GenericEvent $event) {
 		$menu = $event->getSubject();
 		if ($GLOBALS['tf']->ima == 'admin') {
@@ -161,6 +190,9 @@ class Plugin {
 		}
 	}
 
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 */
 	public static function getRequirements(GenericEvent $event) {
 		$loader = $event->getSubject();
 		$loader->add_requirement('crud_vestacp_list', '/../vendor/detain/crud/src/crud/crud_vestacp_list.php');
@@ -177,6 +209,9 @@ class Plugin {
 		$loader->add_requirement('vps_add_vestacp', '/vps/addons/vps_add_vestacp.php');
 	}
 
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 */
 	public static function getSettings(GenericEvent $event) {
 		$settings = $event->getSubject();
 		$settings->add_select_master(self::$module, 'Default Servers', self::$module, 'new_website_vesta_server', 'Default VestaCP Setup Server', NEW_WEBSITE_VESTA_SERVER, get_service_define('WEB_VESTA'));
