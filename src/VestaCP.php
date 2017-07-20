@@ -48,7 +48,7 @@ class VestaCP {
 		$vstReturncode = 'yes';
 		$vstCommand = 'v-add-user';
 		// Prepare POST query
-		$postvars = array(
+		$postvars = [
 			'user' => $this->username,
 			'password' => $this->password,
 			'returncode' => $vstReturncode,
@@ -59,7 +59,7 @@ class VestaCP {
 			'arg4' => $package,
 			'arg5' => $firstName,
 			'arg6' => $lastName
-		);
+		];
 		$postdata = http_build_query($postvars);
 
 		// Send POST query via cURL
@@ -95,14 +95,14 @@ class VestaCP {
 		$vstCommand = 'v-add-domain';
 
 		// Prepare POST query
-		$postvars = array(
+		$postvars = [
 			'user' => $this->username,
 			'password' => $this->password,
 			'returncode' => $vstReturncode,
 			'cmd' => $vstCommand,
 			'arg1' => $username,
 			'arg2' => $domain
-		);
+		];
 		$postdata = http_build_query($postvars);
 
 		// Send POST query via cURL
@@ -135,7 +135,7 @@ class VestaCP {
 		$vstCommand = 'v-add-database';
 
 		// Prepare POST query
-		$postvars = array(
+		$postvars = [
 			'user' => $this->username,
 			'password' => $this->password,
 			'returncode' => $vstReturncode,
@@ -144,7 +144,7 @@ class VestaCP {
 			'arg2' => $dbName,
 			'arg3' => $dbUser,
 			'arg4' => $dbPass
-		);
+		];
 		$postdata = http_build_query($postvars);
 
 		// Send POST query via cURL
@@ -173,13 +173,13 @@ class VestaCP {
 		$vstCommand = 'v-list_user';
 
 		// Prepare POST query
-		$postvars = array(
+		$postvars = [
 			'user' => $this->username,
 			'password' => $this->password,
 			'cmd' => $vstCommand,
 			'arg1' => $username,
 			'arg2' => $format
-		);
+		];
 		$postdata = http_build_query($postvars);
 
 		// Send POST query via cURL
@@ -209,14 +209,14 @@ class VestaCP {
 		$vstCommand = 'v-list-web-domain';
 
 		// Prepare POST query
-		$postvars = array(
+		$postvars = [
 			'user' => $this->username,
 			'password' => $this->password,
 			'cmd' => $vstCommand,
 			'arg1' => $username,
 			'arg2' => $domain,
 			'arg3' => $format
-		);
+		];
 		$postdata = http_build_query($postvars);
 
 		// Send POST query via cURL
@@ -245,13 +245,13 @@ class VestaCP {
 		$vstCommand = 'v-delete-user';
 
 		// Prepare POST query
-		$postvars = array(
+		$postvars = [
 			'user' => $this->username,
 			'password' => $this->password,
 			'returncode' => $vstReturncode,
 			'cmd' => $vstCommand,
 			'arg1' => $username
-		);
+		];
 		$postdata = http_build_query($postvars);
 
 		// Send POST query via cURL
@@ -281,13 +281,13 @@ class VestaCP {
 		$vstCommand = 'v-suspend-user';
 
 		// Prepare POST query
-		$postvars = array(
+		$postvars = [
 			'user' => $this->username,
 			'password' => $this->password,
 			'returncode' => $vstReturncode,
 			'cmd' => $vstCommand,
 			'arg1' => $username
-		);
+		];
 		$postdata = http_build_query($postvars);
 
 		// Send POST query via cURL
@@ -317,13 +317,13 @@ class VestaCP {
 		$vstCommand = 'v-unsuspend-user';
 
 		// Prepare POST query
-		$postvars = array(
+		$postvars = [
 			'user' => $this->username,
 			'password' => $this->password,
 			'returncode' => $vstReturncode,
 			'cmd' => $vstCommand,
 			'arg1' => $username
-		);
+		];
 		$postdata = http_build_query($postvars);
 
 		// Send POST query via cURL
@@ -353,13 +353,13 @@ class VestaCP {
 		$vstCommand = 'v-check-user-password';
 
 		// Prepare POST query
-		$postvars = array(
+		$postvars = [
 			'user' => $this->username,
 			'password' => $this->password,
 			'cmd' => $vstCommand,
 			'arg1' => $username,
 			'arg2' => $password
-		);
+		];
 		$postdata = http_build_query($postvars);
 
 		// Send POST query via cURL
