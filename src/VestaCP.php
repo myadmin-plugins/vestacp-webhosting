@@ -74,7 +74,7 @@ class VestaCP {
 		$this->response = curl_exec($curl);
 
 		// Check result
-		if (is_null($this->response)) {
+		if (null === $this->response) {
 			//echo "Null Response, Check Firewall Settings\n";
 			return FALSE;
 		} elseif ($this->response == '0' || $this->response == 0) {
