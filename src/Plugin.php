@@ -39,6 +39,8 @@ class Plugin {
 
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 * @throws \Exception
+	 * @throws \SmartyException
 	 */
 	public static function getActivate(GenericEvent $event) {
 		if ($event['category'] == get_service_define('WEB_VESTA')) {
