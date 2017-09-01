@@ -207,7 +207,7 @@ class Plugin {
 		$loader->add_requirement('activate_vestacp', '/../vendor/detain/myadmin-vestacp-webhosting/src/vestacp.inc.php');
 		$loader->add_requirement('get_reusable_vestacp', '/../vendor/detain/myadmin-vestacp-webhosting/src/vestacp.inc.php');
 		$loader->add_page_requirement('reusable_vestacp', '/../vendor/detain/myadmin-vestacp-webhosting/src/reusable_vestacp.php');
-		$loader->add_requirement('class.VestaCP', '/../vendor/detain/vestacp-webhosting/src/VestaCP.php');
+		$loader->add_requirement('class.VestaCP', '/../vendor/detain/vestacp-webhosting/src/VestaCP.php', '\\Detain\\MyAdminVestaCP\\');
 		$loader->add_page_requirement('vps_add_vestacp', '/vps/addons/vps_add_vestacp.php');
 	}
 
