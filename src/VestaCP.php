@@ -80,7 +80,7 @@ class VestaCP {
 		} elseif ($this->response == '0' || $this->response == 0) {
 			//echo "User account has been successfully created\n";
 		} else {
-			//echo "Query returned error code: " .$this->response. "\n";
+			//echo "Query returned error code: " .$this->response.PHP_EOL;
 			return FALSE;
 		}
 		return $this->response;
