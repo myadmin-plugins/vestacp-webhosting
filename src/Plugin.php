@@ -67,7 +67,7 @@ class Plugin {
 				$ip = $serverdata[$settings['PREFIX'].'_ip'];
 				$db = get_module_db(self::$module);
 				$username = $db->real_escape($username);
-				$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='$ip', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceClass->getId()}'", __LINE__, __FILE__);
+				$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceClass->getId()}'", __LINE__, __FILE__);
 				function_requirements('website_welcome_email');
 				website_welcome_email($serviceClass->getId());
 				$event['success'] = TRUE;
