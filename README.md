@@ -24,5 +24,5 @@ composer require detain/myadmin-vestacp-webhosting
 
 ## License
 
-The VestaCP Webhosting Class class is licensed under the LGPL-v2 license.
+The VestaCP Webhosting Class class is licensed under the LGPL-v2.1 license.
 
