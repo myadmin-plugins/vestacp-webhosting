@@ -1,40 +1,41 @@
 {
-    "name": "detain/myadmin-vestacp-webhosting",
-    "type": "myadmin-plugin",
-    "description": "VestaCP Webhosting Class",
-    "keywords": [
-        "vestacp",
-        "administration",
-        "license"
-    ],
-    "license": "LGPL-2.1-or-later",
-    "authors": [
-        {
-            "name": "Joe Huss",
-            "homepage": "https:\/\/my.interserver.net\/"
-        }
-    ],
-    "config": {
-        "bin-dir": "vendor\/bin",
-        "minimum-stability": "dev"
-    },
-    "require": {
-        "php": ">=5.0.0",
-        "ext-soap": "*",
-        "symfony/event-dispatcher": "*",
-        "detain/myadmin-plugin-installer": "dev-master",
-        "roave/security-advisories": "dev-master"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "*",
-        "vlucas/phpdotenv": "*",
-        "codeclimate/php-test-reporter": "dev-master",
-        "satooshi/php-coveralls": "*",
-        "codacy/coverage": "dev-master"
-    },
-    "autoload": {
-        "psr-4": {
-            "Detain\\MyAdminVestaCP\\": "src/"
-        }
-    }
+	"name": "detain/myadmin-vestacp-webhosting",
+	"type": "myadmin-plugin",
+	"description": "VestaCP Webhosting Class",
+	"keywords": [
+		"vestacp",
+		"administration",
+		"license"
+	],
+	"license": "LGPL-2.1-or-later",
+	"authors": [
+		{
+			"name": "Joe Huss",
+			"homepage": "https:\/\/my.interserver.net\/"
+		}
+	],
+	"config": {
+		"bin-dir": "vendor\/bin",
+		"minimum-stability": "dev"
+	},
+	"require": {
+		"php": ">=5.0.0",
+		"ext-soap": "*",
+		"symfony/event-dispatcher": "*",
+		"detain/myadmin-plugin-installer": "dev-master",
+		"roave/security-advisories": "dev-master"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "*",
+		"phpunit/phpunit-mock-objects": "*",
+		"vlucas/phpdotenv": "*",
+		"codeclimate/php-test-reporter": "dev-master",
+		"satooshi/php-coveralls": "*",
+		"codacy/coverage": "dev-master"
+	},
+	"autoload": {
+		"psr-4": {
+			"Detain\\MyAdminVestaCP\\": "src/"
+		}
+	}
 }
