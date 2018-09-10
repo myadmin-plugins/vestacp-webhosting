@@ -10,8 +10,8 @@ use Symfony\Component\EventDispatcher\GenericEvent;
  *
  * @package Detain\MyAdminVestaCP
  */
-class Plugin {
-
+class Plugin
+{
 	public static $name = 'VestaCP Webhosting';
 	public static $description = 'Simple & Clever Hosting Control Panel.  More info at https://vestacp.com/';
 	public static $help = '';
@@ -21,13 +21,15 @@ class Plugin {
 	/**
 	 * Plugin constructor.
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 	}
 
 	/**
 	 * @return array
 	 */
-	public static function getHooks() {
+	public static function getHooks()
+	{
 		return [
 			self::$module.'.settings' => [__CLASS__, 'getSettings'],
 			self::$module.'.activate' => [__CLASS__, 'getActivate'],
@@ -42,7 +44,8 @@ class Plugin {
 	 * @throws \Exception
 	 * @throws \SmartyException
 	 */
-	public static function getActivate(GenericEvent $event) {
+	public static function getActivate(GenericEvent $event)
+	{
 		if ($event['category'] == get_service_define('WEB_VESTA')) {
 			myadmin_log(self::$module, 'info', 'VestaCP Activation', __LINE__, __FILE__);
 			$serviceClass = $event->getSubject();
@@ -51,8 +54,9 @@ class Plugin {
 			$hash = $serverdata[$settings['PREFIX'].'_key'];
 			$ip = $serverdata[$settings['PREFIX'].'_ip'];
 			$hostname = $serviceClass->getHostname();
-			if (trim($hostname) == '')
+			if (trim($hostname) == '') {
 				$hostname = $serviceClass->getId().'.server.com';
+			}
 			$password = website_get_password($serviceClass->getId());
 			$username = get_new_webhosting_username($serviceClass->getId(), $hostname, $serviceClass->getServer());
 			$data = $GLOBALS['tf']->accounts->read($serviceClass->getCustid());
@@ -63,19 +67,19 @@ class Plugin {
 			myadmin_log(self::$module, 'info', "Calling vesta->createAccount({$username}, ****************, {$event['email']}, {$data['name']}, {$package})", __LINE__, __FILE__);
 			if ($vesta->createAccount($username, $password, $event['email'], $data['name'], $package)) {
 				request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'vesta', 'createAccount', ['username' => $username, 'password' => $password, 'email' => $event['email'], 'name' => $data['name'], 'package' => $package], $vesta->response);
-				myadmin_log(self::$module, 'info', 'Success, Response: '.var_export($vesta->response, TRUE), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'Success, Response: '.var_export($vesta->response, true), __LINE__, __FILE__);
 				$ip = $serverdata[$settings['PREFIX'].'_ip'];
 				$db = get_module_db(self::$module);
 				$username = $db->real_escape($username);
 				$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceClass->getId()}'", __LINE__, __FILE__);
 				function_requirements('website_welcome_email');
 				website_welcome_email($serviceClass->getId());
-				$event['success'] = TRUE;
+				$event['success'] = true;
 			} else {
 				request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'vesta', 'createAccount', ['username' => $username, 'password' => $password, 'email' => $event['email'], 'name' => $data['name'], 'package' => $package], $vesta->response);
 				add_output('Error Creating Website');
-				myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($vesta->response, TRUE), __LINE__, __FILE__);
-				$event['success'] = FALSE;
+				myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($vesta->response, true), __LINE__, __FILE__);
+				$event['success'] = false;
 			}
 			$event->stopPropagation();
 		}
@@ -84,7 +88,8 @@ class Plugin {
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-	public static function getReactivate(GenericEvent $event) {
+	public static function getReactivate(GenericEvent $event)
+	{
 		if ($event['category'] == get_service_define('WEB_VESTA')) {
 			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
@@ -99,7 +104,7 @@ class Plugin {
 				myadmin_log(self::$module, 'info', 'Success, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
 			} else {
 				myadmin_log(self::$module, 'info', 'Failure, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
-				$event['success'] = FALSE;
+				$event['success'] = false;
 			}
 			$event->stopPropagation();
 		}
@@ -108,7 +113,8 @@ class Plugin {
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-	public static function getDeactivate(GenericEvent $event) {
+	public static function getDeactivate(GenericEvent $event)
+	{
 		if ($event['category'] == get_service_define('WEB_VESTA')) {
 			myadmin_log(self::$module, 'info', 'VestaCP Deactivation', __LINE__, __FILE__);
 			$serviceClass = $event->getSubject();
@@ -132,7 +138,8 @@ class Plugin {
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 * @return bool
 	 */
-	public static function getTerminate(GenericEvent $event) {
+	public static function getTerminate(GenericEvent $event)
+	{
 		if ($event['category'] == get_service_define('WEB_VESTA')) {
 			myadmin_log(self::$module, 'info', 'VestaCP Termination', __LINE__, __FILE__);
 			$serviceClass = $event->getSubject();
@@ -140,17 +147,18 @@ class Plugin {
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
 			$hash = $serverdata[$settings['PREFIX'].'_key'];
 			$ip = $serverdata[$settings['PREFIX'].'_ip'];
-			if (trim($serviceClass->getUsername()) == '')
-				return TRUE;
+			if (trim($serviceClass->getUsername()) == '') {
+				return true;
+			}
 			list($user, $pass) = explode(':', $hash);
 			$vesta = new \Detain\MyAdminVestaCP\VestaCP($ip, $user, $pass);
 			myadmin_log(self::$module, 'info', "Calling vesta->suspendAccount({$serviceClass->getUsername()})", __LINE__, __FILE__);
 			if ($vesta->deleteAccount($serviceClass->getUsername())) {
 				myadmin_log(self::$module, 'info', 'Success, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
-				return TRUE;
+				return true;
 			} else {
 				myadmin_log(self::$module, 'info', 'Failure, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
-				return FALSE;
+				return false;
 			}
 			$event->stopPropagation();
 		}
@@ -159,7 +167,8 @@ class Plugin {
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-	public static function getChangeIp(GenericEvent $event) {
+	public static function getChangeIp(GenericEvent $event)
+	{
 		if ($event['category'] == get_service_define('WEB_VESTA')) {
 			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
@@ -183,7 +192,8 @@ class Plugin {
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-	public static function getMenu(GenericEvent $event) {
+	public static function getMenu(GenericEvent $event)
+	{
 		$menu = $event->getSubject();
 		if ($GLOBALS['tf']->ima == 'admin') {
 			$menu->add_link(self::$module, 'choice=none.reusable_vestacp', '/images/myadmin/to-do.png', 'ReUsable VestaCP Licenses');
@@ -195,7 +205,8 @@ class Plugin {
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-	public static function getRequirements(GenericEvent $event) {
+	public static function getRequirements(GenericEvent $event)
+	{
 		$loader = $event->getSubject();
 		$loader->add_page_requirement('crud_vestacp_list', '/../vendor/detain/crud/src/crud/crud_vestacp_list.php');
 		$loader->add_page_requirement('crud_reusable_vestacp', '/../vendor/detain/crud/src/crud/crud_reusable_vestacp.php');
@@ -214,10 +225,10 @@ class Plugin {
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-	public static function getSettings(GenericEvent $event) {
+	public static function getSettings(GenericEvent $event)
+	{
 		$settings = $event->getSubject();
 		$settings->add_select_master(self::$module, 'Default Servers', self::$module, 'new_website_vesta_server', 'Default VestaCP Setup Server', NEW_WEBSITE_VESTA_SERVER, get_service_define('WEB_VESTA'));
 		$settings->add_dropdown_setting(self::$module, 'Out of Stock', 'outofstock_webhosting_vestacp', 'Out Of Stock VestaCP Webhosting', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_WEBHOSTING_VESTACP'), ['0', '1'], ['No', 'Yes']);
 	}
-
 }

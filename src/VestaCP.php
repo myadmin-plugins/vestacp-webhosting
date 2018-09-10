@@ -5,7 +5,8 @@ namespace Detain\MyAdminVestaCP;
 /**
  * Class VestaCP
  */
-class VestaCP {
+class VestaCP
+{
 	/**
 	 * @var string
 	 */
@@ -28,7 +29,8 @@ class VestaCP {
 	 * @param string $username administrative account to connect with
 	 * @param string $password password to administrative account
 	 */
-	public function __construct($hostname = '', $username = '', $password = '') {
+	public function __construct($hostname = '', $username = '', $password = '')
+	{
 		$this->hostname = $hostname;
 		$this->username = $username;
 		$this->password = $password;
@@ -42,7 +44,8 @@ class VestaCP {
 	 * @param string $package
 	 * @return bool|mixed|string
 	 */
-	public function createAccount($username, $password, $email, $name, $package = 'default') {
+	public function createAccount($username, $password, $email, $name, $package = 'default')
+	{
 		$firstName = trim(mb_substr($name, 0, mb_strpos(' ', $name)));
 		$lastName = trim(mb_substr($name, mb_strpos(' ', $name) + 1));
 		$vstReturncode = 'yes';
@@ -66,22 +69,22 @@ class VestaCP {
 		$postdata = http_build_query($postvars);
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, 'https://'.$this->hostname.':8083/api/');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-		curl_setopt($curl, CURLOPT_POST, TRUE);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_POST, true);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $postdata);
 		$this->response = curl_exec($curl);
 
 		// Check result
 		if (null === $this->response) {
 			//echo "Null Response, Check Firewall Settings\n";
-			return FALSE;
+			return false;
 		} elseif ($this->response == '0' || $this->response == 0) {
 			//echo "User account has been successfully created\n";
 		} else {
 			//echo "Query returned error code: " .$this->response.PHP_EOL;
-			return FALSE;
+			return false;
 		}
 		return $this->response;
 	}
@@ -90,7 +93,8 @@ class VestaCP {
 	 * @param string $username
 	 * @param string $domain
 	 */
-	public function addWebDnsMailDomain($username, $domain) {
+	public function addWebDnsMailDomain($username, $domain)
+	{
 		$vstReturncode = 'yes';
 		$vstCommand = 'v-add-domain';
 
@@ -109,10 +113,10 @@ class VestaCP {
 		$postdata = http_build_query($postvars);
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, 'https://'.$this->hostname.':8083/api/');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-		curl_setopt($curl, CURLOPT_POST, TRUE);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_POST, true);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $postdata);
 		$this->response = curl_exec($curl);
 
@@ -130,7 +134,8 @@ class VestaCP {
 	 * @param string $dbUser
 	 * @param string $dbPass
 	 */
-	public function addDatabase($username, $dbName, $dbUser, $dbPass) {
+	public function addDatabase($username, $dbName, $dbUser, $dbPass)
+	{
 		$vstReturncode = 'yes';
 		$vstCommand = 'v-add-database';
 
@@ -150,10 +155,10 @@ class VestaCP {
 		// Send POST query via cURL
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, 'https://'.$this->hostname.':8083/api/');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-		curl_setopt($curl, CURLOPT_POST, TRUE);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_POST, true);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $postdata);
 		$this->response = curl_exec($curl);
 
@@ -169,7 +174,8 @@ class VestaCP {
 	 * @param string $username
 	 * @param string $format
 	 */
-	public function listAccount($username, $format = 'json') {
+	public function listAccount($username, $format = 'json')
+	{
 		$vstCommand = 'v-list_user';
 
 		// Prepare POST query
@@ -186,15 +192,15 @@ class VestaCP {
 		$postdata = http_build_query($postvars);
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, 'https://'.$this->hostname.':8083/api/');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-		curl_setopt($curl, CURLOPT_POST, TRUE);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_POST, true);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $postdata);
 		$this->response = curl_exec($curl);
 
 		// Parse JSON output
-		$data = json_decode($this->response, TRUE);
+		$data = json_decode($this->response, true);
 
 		// Print result
 		print_r($data);
@@ -205,7 +211,8 @@ class VestaCP {
 	 * @param string $domain
 	 * @param string $format
 	 */
-	public function listWebDomains($username, $domain, $format = 'json') {
+	public function listWebDomains($username, $domain, $format = 'json')
+	{
 		$vstCommand = 'v-list-web-domain';
 
 		// Prepare POST query
@@ -223,15 +230,15 @@ class VestaCP {
 		$postdata = http_build_query($postvars);
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, 'https://'.$this->hostname.':8083/api/');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-		curl_setopt($curl, CURLOPT_POST, TRUE);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_POST, true);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $postdata);
 		$this->response = curl_exec($curl);
 
 		// Parse JSON output
-		$data = json_decode($this->response, TRUE);
+		$data = json_decode($this->response, true);
 
 		// Print result
 		print_r($data);
@@ -240,7 +247,8 @@ class VestaCP {
 	/**
 	 * @param string $username
 	 */
-	public function deleteAccount($username) {
+	public function deleteAccount($username)
+	{
 		$vstReturncode = 'yes';
 		$vstCommand = 'v-delete-user';
 
@@ -258,10 +266,10 @@ class VestaCP {
 		$postdata = http_build_query($postvars);
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, 'https://'.$this->hostname.':8083/api/');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-		curl_setopt($curl, CURLOPT_POST, TRUE);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_POST, true);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $postdata);
 		$this->response = curl_exec($curl);
 
@@ -276,7 +284,8 @@ class VestaCP {
 	/**
 	 * @param string $username
 	 */
-	public function suspendAccount($username) {
+	public function suspendAccount($username)
+	{
 		$vstReturncode = 'yes';
 		$vstCommand = 'v-suspend-user';
 
@@ -294,10 +303,10 @@ class VestaCP {
 		$postdata = http_build_query($postvars);
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, 'https://'.$this->hostname.':8083/api/');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-		curl_setopt($curl, CURLOPT_POST, TRUE);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_POST, true);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $postdata);
 		$this->response = curl_exec($curl);
 
@@ -312,7 +321,8 @@ class VestaCP {
 	/**
 	 * @param string $username
 	 */
-	public function unsuspendAccount($username) {
+	public function unsuspendAccount($username)
+	{
 		$vstReturncode = 'yes';
 		$vstCommand = 'v-unsuspend-user';
 
@@ -330,10 +340,10 @@ class VestaCP {
 		$postdata = http_build_query($postvars);
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, 'https://'.$this->hostname.':8083/api/');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-		curl_setopt($curl, CURLOPT_POST, TRUE);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_POST, true);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $postdata);
 		$this->response = curl_exec($curl);
 
@@ -349,7 +359,8 @@ class VestaCP {
 	 * @param string $username
 	 * @param string $password
 	 */
-	public function checkUserPass($username, $password) {
+	public function checkUserPass($username, $password)
+	{
 		$vstCommand = 'v-check-user-password';
 
 		// Prepare POST query
@@ -366,10 +377,10 @@ class VestaCP {
 		$postdata = http_build_query($postvars);
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, 'https://'.$this->hostname.':8083/api/');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-		curl_setopt($curl, CURLOPT_POST, TRUE);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_POST, true);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $postdata);
 		$this->response = curl_exec($curl);
 
@@ -384,29 +395,32 @@ class VestaCP {
 	/**
 	 * @param string $hostname
 	 */
-	public function setHostname($hostname) {
+	public function setHostname($hostname)
+	{
 		$this->hostname = $hostname;
 	}
 
 	/**
 	 * @param string $password
 	 */
-	public function setPassword($password) {
+	public function setPassword($password)
+	{
 		$this->password = $password;
 	}
 
 	/**
 	 * @param string $username
 	 */
-	public function setUsername($username) {
+	public function setUsername($username)
+	{
 		$this->username = $username;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getResponse() {
+	public function getResponse()
+	{
 		return $this->response;
 	}
-
 }
