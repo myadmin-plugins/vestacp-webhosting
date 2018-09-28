@@ -210,14 +210,14 @@ class Plugin
 		$loader = $event->getSubject();
 		$loader->add_page_requirement('crud_vestacp_list', '/../vendor/detain/crud/src/crud/crud_vestacp_list.php');
 		$loader->add_page_requirement('crud_reusable_vestacp', '/../vendor/detain/crud/src/crud/crud_reusable_vestacp.php');
-		$loader->add_requirement('get_vestacp_licenses', '/../vendor/detain/myadmin-vestacp-webhosting/src/vestacp.inc.php');
-		$loader->add_requirement('get_vestacp_list', '/../vendor/detain/myadmin-vestacp-webhosting/src/vestacp.inc.php');
-		$loader->add_page_requirement('vestacp_licenses_list', '/../vendor/detain/myadmin-vestacp-webhosting/src/vestacp_licenses_list.php');
-		$loader->add_page_requirement('vestacp_list', '/../vendor/detain/myadmin-vestacp-webhosting/src/vestacp_list.php');
-		$loader->add_requirement('get_available_vestacp', '/../vendor/detain/myadmin-vestacp-webhosting/src/vestacp.inc.php');
-		$loader->add_requirement('activate_vestacp', '/../vendor/detain/myadmin-vestacp-webhosting/src/vestacp.inc.php');
-		$loader->add_requirement('get_reusable_vestacp', '/../vendor/detain/myadmin-vestacp-webhosting/src/vestacp.inc.php');
-		$loader->add_page_requirement('reusable_vestacp', '/../vendor/detain/myadmin-vestacp-webhosting/src/reusable_vestacp.php');
+		$loader->add_requirement('get_vestacp_licenses', '/../vendor/detain/vestacp-webhosting/src/vestacp.inc.php');
+		$loader->add_requirement('get_vestacp_list', '/../vendor/detain/vestacp-webhosting/src/vestacp.inc.php');
+		$loader->add_page_requirement('vestacp_licenses_list', '/../vendor/detain/vestacp-webhosting/src/vestacp_licenses_list.php');
+		$loader->add_page_requirement('vestacp_list', '/../vendor/detain/vestacp-webhosting/src/vestacp_list.php');
+		$loader->add_requirement('get_available_vestacp', '/../vendor/detain/vestacp-webhosting/src/vestacp.inc.php');
+		$loader->add_requirement('activate_vestacp', '/../vendor/detain/vestacp-webhosting/src/vestacp.inc.php');
+		$loader->add_requirement('get_reusable_vestacp', '/../vendor/detain/vestacp-webhosting/src/vestacp.inc.php');
+		$loader->add_page_requirement('reusable_vestacp', '/../vendor/detain/vestacp-webhosting/src/reusable_vestacp.php');
 		$loader->add_requirement('class.VestaCP', '/../vendor/detain/vestacp-webhosting/src/VestaCP.php', '\\Detain\\MyAdminVestaCP\\');
 		$loader->add_page_requirement('vps_add_vestacp', '/vps/addons/vps_add_vestacp.php');
 	}
