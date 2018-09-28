@@ -1,5 +1,5 @@
 {
-	"name": "detain/vestacp-webhosting",
+	"name": "detain/myadmin-vestacp-webhosting",
 	"type": "myadmin-plugin",
 	"description": "VestaCP Webhosting Class",
 	"keywords": [
