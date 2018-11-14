@@ -196,9 +196,9 @@ class Plugin
 	{
 		$menu = $event->getSubject();
 		if ($GLOBALS['tf']->ima == 'admin') {
-			$menu->add_link(self::$module, 'choice=none.reusable_vestacp', '/images/myadmin/to-do.png', 'ReUsable VestaCP Licenses');
-			$menu->add_link(self::$module, 'choice=none.vestacp_list', '/images/myadmin/to-do.png', 'VestaCP Licenses Breakdown');
-			$menu->add_link(self::$module.'api', 'choice=none.vestacp_licenses_list', '/images/whm/createacct.gif', 'List all VestaCP Licenses');
+			$menu->add_link(self::$module, 'choice=none.reusable_vestacp', '/images/myadmin/to-do.png', __('ReUsable VestaCP Licenses'));
+			$menu->add_link(self::$module, 'choice=none.vestacp_list', '/images/myadmin/to-do.png', __('VestaCP Licenses Breakdown'));
+			$menu->add_link(self::$module.'api', 'choice=none.vestacp_licenses_list', '/images/whm/createacct.gif', __('List all VestaCP Licenses'));
 		}
 	}
 
@@ -207,7 +207,10 @@ class Plugin
 	 */
 	public static function getRequirements(GenericEvent $event)
 	{
-		$loader = $event->getSubject();
+        /**
+         * @var \MyAdmin\Plugins\Loader $this->loader
+         */
+        $loader = $event->getSubject();
 		$loader->add_page_requirement('crud_vestacp_list', '/../vendor/detain/crud/src/crud/crud_vestacp_list.php');
 		$loader->add_page_requirement('crud_reusable_vestacp', '/../vendor/detain/crud/src/crud/crud_reusable_vestacp.php');
 		$loader->add_requirement('get_vestacp_licenses', '/../vendor/detain/myadmin-vestacp-webhosting/src/vestacp.inc.php');
@@ -225,10 +228,13 @@ class Plugin
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-	public static function getSettings(GenericEvent $event)
-	{
-		$settings = $event->getSubject();
-		$settings->add_select_master(self::$module, 'Default Servers', self::$module, 'new_website_vesta_server', 'Default VestaCP Setup Server', NEW_WEBSITE_VESTA_SERVER, get_service_define('WEB_VESTA'));
-		$settings->add_dropdown_setting(self::$module, 'Out of Stock', 'outofstock_webhosting_vestacp', 'Out Of Stock VestaCP Webhosting', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_WEBHOSTING_VESTACP'), ['0', '1'], ['No', 'Yes']);
+    public static function getSettings(GenericEvent $event)
+    {
+        /**
+         * @var \MyAdmin\Settings $settings
+         **/
+        $settings = $event->getSubject();
+		$settings->add_select_master(__(self::$module), __('Default Servers'), self::$module, 'new_website_vesta_server', __('Default VestaCP Setup Server'), NEW_WEBSITE_VESTA_SERVER, get_service_define('WEB_VESTA'));
+		$settings->add_dropdown_setting(self::$module, __('Out of Stock'), 'outofstock_webhosting_vestacp', __('Out Of Stock VestaCP Webhosting'), __('Enable/Disable Sales Of This Type'), $settings->get_setting('OUTOFSTOCK_WEBHOSTING_VESTACP'), ['0', '1'], ['No', 'Yes']);
 	}
 }
