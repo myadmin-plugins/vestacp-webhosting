@@ -234,7 +234,9 @@ class Plugin
          * @var \MyAdmin\Settings $settings
          **/
         $settings = $event->getSubject();
+        $settings->setTarget('module');
 		$settings->add_select_master(_(self::$module), _('Default Servers'), self::$module, 'new_website_vesta_server', _('Default VestaCP Setup Server'), NEW_WEBSITE_VESTA_SERVER, get_service_define('WEB_VESTA'));
 		$settings->add_dropdown_setting(self::$module, _('Out of Stock'), 'outofstock_webhosting_vestacp', _('Out Of Stock VestaCP Webhosting'), _('Enable/Disable Sales Of This Type'), $settings->get_setting('OUTOFSTOCK_WEBHOSTING_VESTACP'), ['0', '1'], ['No', 'Yes']);
+        $settings->setTarget('global');
 	}
 }
