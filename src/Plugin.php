@@ -47,8 +47,8 @@ class Plugin
 	public static function getActivate(GenericEvent $event)
 	{
 		if ($event['category'] == get_service_define('WEB_VESTA')) {
-			myadmin_log(self::$module, 'info', 'VestaCP Activation', __LINE__, __FILE__);
 			$serviceClass = $event->getSubject();
+            myadmin_log(self::$module, 'info', 'VestaCP Activation', __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			$settings = get_module_settings(self::$module);
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
 			$hash = $serverdata[$settings['PREFIX'].'_key'];
@@ -61,13 +61,13 @@ class Plugin
 			$username = get_new_webhosting_username($serviceClass->getId(), $hostname, $serviceClass->getServer());
 			$data = $GLOBALS['tf']->accounts->read($serviceClass->getCustid());
 			list($user, $pass) = explode(':', $hash);
-			myadmin_log(self::$module, 'info', "Calling vesta = new VestaCP($ip, $user, ****************)", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "Calling vesta = new VestaCP($ip, $user, ****************)", __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			$vesta = new VestaCP($ip, $user, $pass);
 			$package = 'default';
-			myadmin_log(self::$module, 'info', "Calling vesta->createAccount({$username}, ****************, {$event['email']}, {$data['name']}, {$package})", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "Calling vesta->createAccount({$username}, ****************, {$event['email']}, {$data['name']}, {$package})", __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			if ($vesta->createAccount($username, $password, $event['email'], $data['name'], $package)) {
 				request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'vesta', 'createAccount', ['username' => $username, 'password' => $password, 'email' => $event['email'], 'name' => $data['name'], 'package' => $package], $vesta->response);
-				myadmin_log(self::$module, 'info', 'Success, Response: '.var_export($vesta->response, true), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'Success, Response: '.var_export($vesta->response, true), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 				$ip = $serverdata[$settings['PREFIX'].'_ip'];
 				$db = get_module_db(self::$module);
 				$username = $db->real_escape($username);
@@ -78,7 +78,7 @@ class Plugin
 			} else {
 				request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'vesta', 'createAccount', ['username' => $username, 'password' => $password, 'email' => $event['email'], 'name' => $data['name'], 'package' => $package], $vesta->response);
 				add_output('Error Creating Website');
-				myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($vesta->response, true), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($vesta->response, true), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 				$event['success'] = false;
 			}
 			$event->stopPropagation();
@@ -97,13 +97,13 @@ class Plugin
 			$hash = $serverdata[$settings['PREFIX'].'_key'];
 			$ip = $serverdata[$settings['PREFIX'].'_ip'];
 			list($user, $pass) = explode(':', $hash);
-			myadmin_log(self::$module, 'info', 'VestaCP Reactivation', __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', 'VestaCP Reactivation', __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			$vesta = new VestaCP($ip, $user, $pass);
-			myadmin_log(self::$module, 'info', "Calling vesta->unsuspendAccount({$serviceClass->getUsername()})", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "Calling vesta->unsuspendAccount({$serviceClass->getUsername()})", __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			if ($vesta->unsuspendAccount($serviceClass->getUsername())) {
-				myadmin_log(self::$module, 'info', 'Success, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'Success, Response: '.json_encode($vesta->response), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			} else {
-				myadmin_log(self::$module, 'info', 'Failure, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'Failure, Response: '.json_encode($vesta->response), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 				$event['success'] = false;
 			}
 			$event->stopPropagation();
@@ -124,11 +124,11 @@ class Plugin
 			$ip = $serverdata[$settings['PREFIX'].'_ip'];
 			list($user, $pass) = explode(':', $hash);
 			$vesta = new \Detain\MyAdminVestaCP\VestaCP($ip, $user, $pass);
-			myadmin_log(self::$module, 'info', "Calling vesta->suspendAccount({$serviceClass->getUsername()})", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "Calling vesta->suspendAccount({$serviceClass->getUsername()})", __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			if ($vesta->suspendAccount($serviceClass->getUsername())) {
-				myadmin_log(self::$module, 'info', 'Success, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'Success, Response: '.json_encode($vesta->response), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			} else {
-				myadmin_log(self::$module, 'info', 'Failure, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'Failure, Response: '.json_encode($vesta->response), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			}
 			$event->stopPropagation();
 		}
@@ -152,12 +152,12 @@ class Plugin
 			}
 			list($user, $pass) = explode(':', $hash);
 			$vesta = new \Detain\MyAdminVestaCP\VestaCP($ip, $user, $pass);
-			myadmin_log(self::$module, 'info', "Calling vesta->suspendAccount({$serviceClass->getUsername()})", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "Calling vesta->suspendAccount({$serviceClass->getUsername()})", __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			if ($vesta->deleteAccount($serviceClass->getUsername())) {
-				myadmin_log(self::$module, 'info', 'Success, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'Success, Response: '.json_encode($vesta->response), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 				return true;
 			} else {
-				myadmin_log(self::$module, 'info', 'Failure, Response: '.json_encode($vesta->response), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'Failure, Response: '.json_encode($vesta->response), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 				return false;
 			}
 			$event->stopPropagation();
@@ -173,7 +173,7 @@ class Plugin
 			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
 			$vestacp = new VestaCP(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
-			myadmin_log(self::$module, 'info', 'IP Change - (OLD:' .$serviceClass->getIp().") (NEW:{$event['newip']})", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', 'IP Change - (OLD:' .$serviceClass->getIp().") (NEW:{$event['newip']})", __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			$result = $vestacp->editIp($serviceClass->getIp(), $event['newip']);
 			if (isset($result['faultcode'])) {
 				myadmin_log(self::$module, 'error', 'VestaCP editIp('.$serviceClass->getIp().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__, self::$module);
