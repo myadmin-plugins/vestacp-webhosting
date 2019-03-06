@@ -116,8 +116,8 @@ class Plugin
 	public static function getDeactivate(GenericEvent $event)
 	{
 		if ($event['category'] == get_service_define('WEB_VESTA')) {
-			myadmin_log(self::$module, 'info', 'VestaCP Deactivation', __LINE__, __FILE__);
-			$serviceClass = $event->getSubject();
+            $serviceClass = $event->getSubject();
+			myadmin_log(self::$module, 'info', 'VestaCP Deactivation', __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			$settings = get_module_settings(self::$module);
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
 			$hash = $serverdata[$settings['PREFIX'].'_key'];
