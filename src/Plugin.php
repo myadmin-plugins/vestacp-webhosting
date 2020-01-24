@@ -66,7 +66,7 @@ class Plugin
 			$package = 'default';
 			myadmin_log(self::$module, 'info', "Calling vesta->createAccount({$username}, ****************, {$event['email']}, {$data['name']}, {$package})", __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			if ($vesta->createAccount($username, $password, $event['email'], $data['name'], $package)) {
-				request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'vesta', 'createAccount', ['username' => $username, 'password' => $password, 'email' => $event['email'], 'name' => $data['name'], 'package' => $package], $vesta->response);
+				request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'vesta', 'createAccount', ['username' => $username, 'password' => $password, 'email' => $event['email'], 'name' => $data['name'], 'package' => $package], $vesta->response, $serviceClass->getId());
 				myadmin_log(self::$module, 'info', 'Success, Response: '.var_export($vesta->response, true), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 				$ip = $serverdata[$settings['PREFIX'].'_ip'];
 				$db = get_module_db(self::$module);
@@ -76,7 +76,7 @@ class Plugin
 				website_welcome_email($serviceClass->getId());
 				$event['success'] = true;
 			} else {
-				request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'vesta', 'createAccount', ['username' => $username, 'password' => $password, 'email' => $event['email'], 'name' => $data['name'], 'package' => $package], $vesta->response);
+				request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'vesta', 'createAccount', ['username' => $username, 'password' => $password, 'email' => $event['email'], 'name' => $data['name'], 'package' => $package], $vesta->response, $serviceClass->getId());
 				add_output('Error Creating Website');
 				myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($vesta->response, true), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 				$event['success'] = false;
