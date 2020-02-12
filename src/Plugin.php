@@ -126,8 +126,10 @@ class Plugin
 			$vesta = new \Detain\MyAdminVestaCP\VestaCP($ip, $user, $pass);
 			myadmin_log(self::$module, 'info', "Calling vesta->suspendAccount({$serviceClass->getUsername()})", __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			if ($vesta->suspendAccount($serviceClass->getUsername())) {
+				$event['success'] = true;
 				myadmin_log(self::$module, 'info', 'Success, Response: '.json_encode($vesta->response), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			} else {
+				$event['success'] = false;
 				myadmin_log(self::$module, 'info', 'Failure, Response: '.json_encode($vesta->response), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			}
 			$event->stopPropagation();
