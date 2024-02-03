@@ -60,7 +60,7 @@ class Plugin
             $password = website_get_password($serviceClass->getId());
             $username = get_new_webhosting_username($serviceClass->getId(), $hostname, $serviceClass->getServer());
             $data = $GLOBALS['tf']->accounts->read($serviceClass->getCustid());
-            list($user, $pass) = explode(':', $hash);
+            [$user, $pass] = explode(':', $hash);
             myadmin_log(self::$module, 'info', "Calling vesta = new VestaCP($ip, $user, ****************)", __LINE__, __FILE__, self::$module, $serviceClass->getId());
             $vesta = new VestaCP($ip, $user, $pass);
             $package = 'default';
@@ -96,7 +96,7 @@ class Plugin
             $serverdata = get_service_master($serviceClass->getServer(), self::$module);
             $hash = $serverdata[$settings['PREFIX'].'_key'];
             $ip = $serverdata[$settings['PREFIX'].'_ip'];
-            list($user, $pass) = explode(':', $hash);
+            [$user, $pass] = explode(':', $hash);
             myadmin_log(self::$module, 'info', 'VestaCP Reactivation', __LINE__, __FILE__, self::$module, $serviceClass->getId());
             $vesta = new VestaCP($ip, $user, $pass);
             myadmin_log(self::$module, 'info', "Calling vesta->unsuspendAccount({$serviceClass->getUsername()})", __LINE__, __FILE__, self::$module, $serviceClass->getId());
@@ -122,7 +122,7 @@ class Plugin
             $serverdata = get_service_master($serviceClass->getServer(), self::$module);
             $hash = $serverdata[$settings['PREFIX'].'_key'];
             $ip = $serverdata[$settings['PREFIX'].'_ip'];
-            list($user, $pass) = explode(':', $hash);
+            [$user, $pass] = explode(':', $hash);
             $vesta = new \Detain\MyAdminVestaCP\VestaCP($ip, $user, $pass);
             myadmin_log(self::$module, 'info', "Calling vesta->suspendAccount({$serviceClass->getUsername()})", __LINE__, __FILE__, self::$module, $serviceClass->getId());
             if ($vesta->suspendAccount($serviceClass->getUsername())) {
@@ -152,7 +152,7 @@ class Plugin
             if (trim($serviceClass->getUsername()) == '') {
                 return true;
             }
-            list($user, $pass) = explode(':', $hash);
+            [$user, $pass] = explode(':', $hash);
             $vesta = new \Detain\MyAdminVestaCP\VestaCP($ip, $user, $pass);
             myadmin_log(self::$module, 'info', "Calling vesta->suspendAccount({$serviceClass->getUsername()})", __LINE__, __FILE__, self::$module, $serviceClass->getId());
             if ($vesta->deleteAccount($serviceClass->getUsername())) {
