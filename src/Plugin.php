@@ -57,7 +57,7 @@ class Plugin
             if (trim($hostname) == '') {
                 $hostname = $serviceClass->getId().'.server.com';
             }
-            $password = website_get_password($serviceClass->getId());
+            $password = website_get_password($serviceClass->getId(), $serviceClass->getCustid());
             $username = get_new_webhosting_username($serviceClass->getId(), $hostname, $serviceClass->getServer());
             $data = $GLOBALS['tf']->accounts->read($serviceClass->getCustid());
             [$user, $pass] = explode(':', $hash);
