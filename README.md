@@ -1,28 +1,42 @@
-# VestaCP Webhosting Class
+# VestaCP Webhosting Plugin
 
-VestaCP Webhosting Class
+[![Tests](https://github.com/detain/myadmin-vestacp-webhosting/actions/workflows/tests.yml/badge.svg)](https://github.com/detain/myadmin-vestacp-webhosting/actions/workflows/tests.yml)
+[![Latest Stable Version](https://poser.pugx.org/detain/myadmin-vestacp-webhosting/version)](https://packagist.org/packages/detain/myadmin-vestacp-webhosting)
+[![Total Downloads](https://poser.pugx.org/detain/myadmin-vestacp-webhosting/downloads)](https://packagist.org/packages/detain/myadmin-vestacp-webhosting)
+[![License](https://poser.pugx.org/detain/myadmin-vestacp-webhosting/license)](https://packagist.org/packages/detain/myadmin-vestacp-webhosting)
 
-## Build Status and Code Analysis
+A MyAdmin plugin that provides VestaCP webhosting integration. This package supplies a PHP API client for the VestaCP control panel and an event-driven plugin that handles the full hosting account lifecycle -- activation, reactivation, suspension, and termination -- through the Symfony EventDispatcher.
 
-Site          | Status
---------------|---------------------------
-![Travis-CI](http://i.is.cc/storage/GYd75qN.png "Travis-CI")     | [![Build Status](https://travis-ci.org/detain/myadmin-vestacp-webhosting.svg?branch=master)](https://travis-ci.org/detain/myadmin-vestacp-webhosting)
-![CodeClimate](http://i.is.cc/storage/GYlageh.png "CodeClimate")  | [![Code Climate](https://codeclimate.com/github/detain/myadmin-vestacp-webhosting/badges/gpa.svg)](https://codeclimate.com/github/detain/myadmin-vestacp-webhosting) [![Test Coverage](https://codeclimate.com/github/detain/myadmin-vestacp-webhosting/badges/coverage.svg)](https://codeclimate.com/github/detain/myadmin-vestacp-webhosting/coverage) [![Issue Count](https://codeclimate.com/github/detain/myadmin-vestacp-webhosting/badges/issue_count.svg)](https://codeclimate.com/github/detain/myadmin-vestacp-webhosting)
-![Scrutinizer](http://i.is.cc/storage/GYeUnux.png "Scrutinizer")   | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/myadmin-plugins/vestacp-webhosting/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/myadmin-plugins/vestacp-webhosting/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/myadmin-plugins/vestacp-webhosting/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/myadmin-plugins/vestacp-webhosting/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/myadmin-plugins/vestacp-webhosting/badges/build.png?b=master)](https://scrutinizer-ci.com/g/myadmin-plugins/vestacp-webhosting/build-status/master)
-![Codacy](http://i.is.cc/storage/GYi66Cx.png "Codacy")        | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/226251fc068f4fd5b4b4ef9a40011d06)](https://www.codacy.com/app/detain/myadmin-vestacp-webhosting) [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/25fa74eb74c947bf969602fcfe87e349)](https://www.codacy.com/app/detain/myadmin-vestacp-webhosting?utm_source=github.com&utm_medium=referral&utm_content=detain/myadmin-vestacp-webhosting&utm_campaign=Badge_Coverage)
-![Coveralls](http://i.is.cc/storage/GYjNSim.png "Coveralls")    | [![Coverage Status](https://coveralls.io/repos/github/detain/db_abstraction/badge.svg?branch=master)](https://coveralls.io/github/detain/myadmin-vestacp-webhosting?branch=master)
-![Packagist](http://i.is.cc/storage/GYacBEX.png "Packagist")     | [![Latest Stable Version](https://poser.pugx.org/detain/myadmin-vestacp-webhosting/version)](https://packagist.org/packages/detain/myadmin-vestacp-webhosting) [![Total Downloads](https://poser.pugx.org/detain/myadmin-vestacp-webhosting/downloads)](https://packagist.org/packages/detain/myadmin-vestacp-webhosting) [![Latest Unstable Version](https://poser.pugx.org/detain/myadmin-vestacp-webhosting/v/unstable)](//packagist.org/packages/detain/myadmin-vestacp-webhosting) [![Monthly Downloads](https://poser.pugx.org/detain/myadmin-vestacp-webhosting/d/monthly)](https://packagist.org/packages/detain/myadmin-vestacp-webhosting) [![Daily Downloads](https://poser.pugx.org/detain/myadmin-vestacp-webhosting/d/daily)](https://packagist.org/packages/detain/myadmin-vestacp-webhosting) [![License](https://poser.pugx.org/detain/myadmin-vestacp-webhosting/license)](https://packagist.org/packages/detain/myadmin-vestacp-webhosting)
+## Features
 
+- VestaCP API client with support for account creation, suspension, deletion, domain and database management, and credential verification
+- Event-driven plugin architecture using Symfony EventDispatcher hooks
+- Full hosting lifecycle management (activate, reactivate, deactivate, terminate)
+- Administrative settings and menu integration for the MyAdmin control panel
+
+## Requirements
+
+- PHP >= 5.0
+- ext-curl
+- ext-soap
+- ext-mbstring
+- Symfony EventDispatcher ^5.0
 
 ## Installation
 
-Install with composer like
+Install with Composer:
 
 ```sh
 composer require detain/myadmin-vestacp-webhosting
 ```
 
+## Running Tests
+
+```sh
+composer install
+vendor/bin/phpunit
+```
+
 ## License
 
-The VestaCP Webhosting Class class is licensed under the LGPL-v2.1 license.
-
+This package is licensed under the [LGPL-2.1](LICENSE) license.
